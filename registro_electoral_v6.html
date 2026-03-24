@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Documentos — DGRE</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f2f5;
+  --white: #ffffff;
+  --surface: #ffffff;
+  --surface2: #f7f8fa;
+  --border: #dde1e8;
+  --border2: #c8cdd8;
+  --primary: #003876;
+  --primary-light: #0057b8;
+  --primary-bg: #e8eef7;
+  --secondary: #c8102e;
+  --accent: #0078d4;
+  --success: #107c10;
+  --success-bg: #dff6dd;
+  --warning: #d67f00;
+  --warning-bg: #fff4ce;
+  --danger: #c8102e;
+  --danger-bg: #fde7e9;
+  --text: #1a1f2e;
+  --text2: #4a5568;
+  --text3: #8a93a8;
+  --radius: 6px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 13px; }
+
+/* LOGIN */
+.login-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #002a5c 0%, #003876 50%, #0057b8 100%);
+}
+.login-box {
+  background: white; border-radius: 12px; padding: 40px; width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-logo {
+  text-align: center; margin-bottom: 24px;
+}
+.login-logo-badge {
+  width: 60px; height: 60px; background: var(--primary); border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; color: white; font-size: 18px; margin-bottom: 12px;
+}
+.login-inst { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+.login-dept { font-size: 14px; font-weight: 600; color: var(--primary); margin-top: 3px; }
+.login-title { font-size: 16px; font-weight: 600; text-align: center; margin-bottom: 24px; color: var(--text); }
+.login-group { margin-bottom: 16px; }
+.login-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 5px; }
+.login-input {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border2); border-radius: var(--radius);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: 0.15s;
+}
+.login-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,120,212,0.15); }
+.login-btn {
+  width: 100%; padding: 11px; background: var(--primary); color: white; border: none;
+  border-radius: var(--radius); font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+  font-weight: 600; cursor: pointer; transition: 0.15s; margin-top: 8px;
+}
+.login-btn:hover { background: var(--primary-light); }
+.login-error {
+  background: var(--danger-bg); border: 1px solid rgba(200,16,46,0.2);
+  border-radius: var(--radius); padding: 10px 12px; font-size: 12px; color: var(--danger);
+  margin-bottom: 14px; display: none;
+}
+.login-error.show { display: block; }
+
+/* APP */
+.app-wrap { display: none; }
+.app-wrap.show { display: block; }
+
+/* HEADER */
+.app-header { background: var(--primary); color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.header-top { display: flex; align-items: center; gap: 16px; padding: 10px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.header-logo { width: 40px; height: 40px; background: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary); font-size: 10px; flex-shrink: 0; }
+.header-titles { flex: 1; }
+.header-inst { font-size: 10px; opacity: 0.7; letter-spacing: 0.5px; text-transform: uppercase; }
+.header-dept { font-size: 14px; font-weight: 600; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.year-sel { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.year-sel label { opacity: 0.8; }
+.year-sel select { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 4px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; cursor: pointer; outline: none; }
+.year-sel select option { background: var(--primary); }
+.user-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px; padding: 4px 12px 4px 6px; cursor: pointer; transition: 0.15s;
+}
+.user-pill:hover { background: rgba(255,255,255,0.2); }
+.user-avatar {
+  width: 26px; height: 26px; border-radius: 50%; background: #f0c040;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: var(--primary); font-size: 11px;
+}
+.user-name { font-size: 12px; font-weight: 500; }
+.user-role-badge { font-size: 10px; opacity: 0.7; }
+.logout-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-family: 'IBM Plex Sans', sans-serif; transition: 0.15s; }
+.logout-btn:hover { background: rgba(200,16,46,0.4); }
+
+/* NAV */
+.app-nav { display: flex; background: var(--primary-light); padding: 0 24px; overflow-x: auto; }
+.nav-tab { padding: 10px 16px; font-size: 12px; font-weight: 500; cursor: pointer; color: rgba(255,255,255,0.7); border-bottom: 3px solid transparent; transition: 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.nav-tab:hover { color: white; background: rgba(255,255,255,0.08); }
+.nav-tab.active { color: white; border-bottom-color: #f0c040; background: rgba(255,255,255,0.1); }
+.nav-tab.hidden { display: none; }
+.nav-tab svg { width: 13px; height: 13px; }
+.nav-badge { background: var(--secondary); color: white; border-radius: 10px; font-size: 10px; padding: 1px 6px; font-weight: 600; }
+
+/* BODY */
+.app-body { padding: 20px 24px; max-width: 1400px; margin: 0 auto; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.card-header { padding: 12px 18px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.card-title { font-weight: 600; font-size: 13px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.card-title svg { width: 14px; height: 14px; }
+.card-body { padding: 18px; }
+
+/* DASHBOARD */
+.dash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.dash-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); border-left: 4px solid var(--primary); }
+.dash-stat.red { border-left-color: var(--secondary); }
+.dash-stat.green { border-left-color: var(--success); }
+.dash-stat.orange { border-left-color: var(--warning); }
+.dash-stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 500; color: var(--primary); }
+.dash-stat.red .dash-stat-value { color: var(--secondary); }
+.dash-stat.green .dash-stat-value { color: var(--success); }
+.dash-stat.orange .dash-stat-value { color: var(--warning); }
+.dash-stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: var(--radius); font-size: 12px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: 0.15s; white-space: nowrap; }
+.btn svg { width: 13px; height: 13px; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-light); }
+.btn-secondary { background: var(--secondary); color: white; }
+.btn-outline { background: white; color: var(--primary); border-color: var(--border2); }
+.btn-outline:hover { border-color: var(--primary); background: var(--primary-bg); }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-ghost { background: transparent; color: var(--text2); border-color: var(--border); }
+.btn-ghost:hover { background: var(--surface2); }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+.btn-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; border: 1px solid var(--border); background: white; color: var(--text2); transition: 0.15s; }
+.btn-icon:hover { background: var(--primary-bg); color: var(--primary); border-color: var(--primary); }
+.btn-icon.danger:hover { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
+.btn-icon svg { width: 12px; height: 12px; }
+
+/* FORM */
+.form-grid { display: grid; gap: 12px; }
+.form-row-2 { grid-template-columns: 1fr 1fr; }
+.form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-label.req::after { content: ' *'; color: var(--secondary); }
+.form-control { padding: 7px 10px; border: 1px solid var(--border2); border-radius: var(--radius); font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--text); background: white; outline: none; transition: 0.15s; }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,120,212,0.12); }
+.form-control:disabled { background: var(--surface2); color: var(--text3); }
+textarea.form-control { resize: vertical; min-height: 68px; }
+.form-control-static { padding: 7px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--secondary); font-weight: 500; }
+.code-display { padding: 7px 10px; background: #eef3fb; border: 1px solid #b8cce4; border-radius: var(--radius); font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--primary); font-weight: 600; letter-spacing: 0.5px; }
+.input-group { display: flex; gap: 6px; }
+.input-group .form-control { flex: 1; }
+.form-section { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 12px; position: relative; }
+.form-section-title { position: absolute; top: -9px; left: 10px; background: white; padding: 0 6px; font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--border); }
+
+/* TABLE */
+.table-toolbar { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; }
+.search-wrap { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border2); border-radius: var(--radius); padding: 5px 10px; flex: 1; min-width: 180px; }
+.search-wrap svg { width: 13px; height: 13px; color: var(--text3); flex-shrink: 0; }
+.search-wrap input { border: none; outline: none; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--text); flex: 1; background: transparent; }
+.search-wrap input::placeholder { color: var(--text3); }
+select.fctrl { padding: 5px 8px; border: 1px solid var(--border2); border-radius: var(--radius); font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; color: var(--text); background: white; cursor: pointer; outline: none; }
+table { width: 100%; border-collapse: collapse; }
+thead tr { border-bottom: 2px solid var(--border); }
+th { padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface2); white-space: nowrap; }
+td { padding: 9px 12px; font-size: 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:hover td { background: #f5f8ff; }
+.mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+.td-actions { display: flex; gap: 4px; }
+.badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+.b-rec { background: var(--primary-bg); color: var(--primary); }
+.b-env { background: #e3f2fd; color: #1565c0; }
+.b-pend { background: var(--warning-bg); color: var(--warning); }
+.b-asig { background: #f3e5f5; color: #6a1b9a; }
+.b-res { background: var(--success-bg); color: var(--success); }
+.b-admin { background: #fce4ec; color: #880e4f; }
+.b-recep { background: #e8eaf6; color: #283593; }
+.b-crea { background: #e0f2f1; color: #00695c; }
+.b-rep { background: #fff8e1; color: #f57f17; }
+
+/* PAGINATION */
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); }
+.pag-btns { display: flex; gap: 3px; }
+.pag-btn { min-width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 11px; background: white; color: var(--text2); transition: 0.15s; padding: 0 6px; }
+.pag-btn:hover, .pag-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,30,80,0.5); display: flex; align-items: center; justify-content: center; z-index: 300; opacity: 0; pointer-events: none; transition: 0.2s; backdrop-filter: blur(2px); }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border-radius: 8px; box-shadow: var(--shadow-lg); max-width: 96vw; max-height: 92vh; overflow-y: auto; transform: translateY(-16px); transition: 0.2s; border: 1px solid var(--border); }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-header { background: var(--primary); color: white; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1; }
+.modal-title { font-weight: 600; font-size: 14px; }
+.modal-sub { font-size: 10px; opacity: 0.7; margin-top: 1px; }
+.modal-close { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 4px; background: rgba(255,255,255,0.15); color: white; font-size: 16px; border: none; }
+.modal-close:hover { background: rgba(255,255,255,0.25); }
+.modal-body { padding: 18px; }
+
+/* TOAST */
+.toast-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 500; display: flex; flex-direction: column; gap: 6px; }
+.toast { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px; font-size: 12px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); animation: fadeUp 0.3s ease; min-width: 240px; }
+.toast.success { border-left: 4px solid var(--success); }
+.toast.error { border-left: 4px solid var(--danger); }
+.toast.info { border-left: 4px solid var(--accent); }
+@keyframes fadeUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text3); }
+.empty-state svg { width: 36px; height: 36px; margin-bottom: 10px; opacity: 0.3; }
+.empty-state p { font-size: 13px; }
+.separator { height: 1px; background: var(--border); margin: 12px 0; }
+.section-actions { display: flex; gap: 8px; align-items: center; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+/* ACCESS DENIED */
+.access-denied { text-align: center; padding: 60px 20px; }
+.access-denied svg { width: 48px; height: 48px; color: var(--text3); margin-bottom: 14px; }
+.access-denied h3 { font-size: 16px; color: var(--text2); margin-bottom: 6px; }
+.access-denied p { font-size: 13px; color: var(--text3); }
+
+/* PLAZO ALERTS */
+.plazo-vencido { background: #fde7e9 !important; }
+.plazo-vencido td { background: #fde7e9 !important; }
+.plazo-proximo { background: #fff8e1 !important; }
+.plazo-proximo td { background: #fff8e1 !important; }
+.plazo-chip { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:3px; font-size:10px; font-weight:700; }
+.plazo-chip.vencido { background:var(--danger-bg); color:var(--danger); }
+.plazo-chip.proximo { background:var(--warning-bg); color:var(--warning); }
+.plazo-chip.ok { background:var(--success-bg); color:var(--success); }
+
+/* ALERT BANNER */
+.alert-banner {
+  display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:var(--radius);
+  font-size:12px; margin-bottom:14px; border: 1px solid transparent;
+}
+.alert-banner.warn { background:var(--warning-bg); border-color:#f5d88a; color:#7a4a00; }
+.alert-banner.danger { background:var(--danger-bg); border-color:#f5b8c0; color:#8b0000; }
+.alert-banner svg { width:16px; height:16px; flex-shrink:0; }
+.alert-count { font-weight:700; margin: 0 2px; }
+
+/* ASIGNADOS LIST — multi-persona */
+.asig-chips { display:flex; flex-wrap:wrap; gap:4px; }
+.asig-chip { display:inline-flex; align-items:center; gap:4px; background:var(--primary-bg); color:var(--primary); border-radius:3px; padding:2px 8px; font-size:11px; font-weight:500; }
+
+/* NOTIF EMAIL MODAL */
+.email-preview {
+  background:#f8f9fb; border:1px solid var(--border); border-radius:var(--radius); padding:14px;
+  font-size:12px; font-family:'IBM Plex Mono',monospace; white-space:pre-wrap; line-height:1.6;
+  max-height:280px; overflow-y:auto; margin-bottom:12px;
+}
+.email-field { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:12px; }
+.email-field label { font-weight:600; color:var(--text2); min-width:60px; }
+.email-field input { flex:1; }
+.notif-sent { background:var(--success-bg); border:1px solid #86d086; border-radius:var(--radius); padding:10px 14px; font-size:12px; color:var(--success); display:none; margin-bottom:10px; }
+.notif-sent.show { display:block; }
+
+/* CONFIG SECTION */
+.config-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); }
+.config-row:last-child { border-bottom:none; }
+.config-label { font-size:13px; font-weight:500; }
+.config-desc { font-size:11px; color:var(--text3); margin-top:2px; }
+.config-control { display:flex; align-items:center; gap:8px; }
+
+/* JEFATURA BADGE */
+.jef-badge { display:inline-flex; align-items:center; gap:4px; background:#e8f5e9; color:#2e7d32; border-radius:3px; padding:2px 8px; font-size:11px; font-weight:600; }
+.jef-badge.alt { background:#e8eaf6; color:#283593; }
+
+/* GLOBAL SEARCH */
+.global-search-wrap {
+  position: relative; flex: 1; max-width: 320px;
+}
+.global-search-input {
+  width: 100%; padding: 6px 12px 6px 32px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.12);
+  color: white; font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; outline: none;
+  transition: 0.2s;
+}
+.global-search-input::placeholder { color: rgba(255,255,255,0.5); }
+.global-search-input:focus { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
+.global-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: rgba(255,255,255,0.6); pointer-events: none; }
+.global-search-results {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: white; border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); z-index: 200; max-height: 320px; overflow-y: auto; display: none;
+}
+.global-search-results.open { display: block; }
+.gsr-item {
+  padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border);
+  transition: 0.1s; display: flex; align-items: center; gap: 10px;
+}
+.gsr-item:last-child { border-bottom: none; }
+.gsr-item:hover { background: var(--primary-bg); }
+.gsr-code { font-family: monospace; font-size: 11px; font-weight: 600; color: var(--primary); min-width: 140px; }
+.gsr-asunto { font-size: 12px; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gsr-tipo { font-size: 10px; }
+.gsr-empty { padding: 14px; text-align: center; font-size: 12px; color: var(--text3); }
+
+/* DIAS TRANSCURRIDOS */
+.dias-chip { display:inline-flex; align-items:center; gap:3px; padding:2px 7px; border-radius:3px; font-size:10px; font-weight:600; }
+.dias-chip.normal { background:var(--surface2); color:var(--text3); }
+.dias-chip.medium { background:var(--warning-bg); color:var(--warning); }
+.dias-chip.high { background:var(--danger-bg); color:var(--danger); }
+
+/* MIS ASIGNADOS */
+.mis-asig-card {
+  border: 1px solid var(--border); border-radius: var(--radius); background: white;
+  margin-bottom: 12px; overflow: hidden; transition: 0.15s;
+}
+.mis-asig-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+.mis-asig-header { padding: 12px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.mis-asig-body { padding: 12px 16px; }
+
+/* CANAL DE INGRESO */
+.canal-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 8px; border-radius:3px; font-size:10px; font-weight:600; white-space:nowrap; }
+.canal-ventanilla { background:#e8eaf6; color:#283593; }
+.canal-interna { background:#e8f5e9; color:#1b5e20; }
+.canal-externo { background:#fff3e0; color:#e65100; }
+.canal-correo { background:#e3f2fd; color:#0d47a1; }
+
+/* NOTIFICACION DE ASIGNACION */
+.asig-notif-banner {
+  display:flex; align-items:center; gap:12px; padding:12px 18px;
+  background: linear-gradient(135deg, #003876, #0057b8);
+  color: white; border-radius: var(--radius); margin-bottom: 16px;
+  box-shadow: var(--shadow-lg); animation: slideDown 0.4s ease;
+}
+@keyframes slideDown { from { transform:translateY(-10px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.asig-notif-banner svg { width:20px; height:20px; flex-shrink:0; }
+.asig-notif-count { font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:700; min-width:36px; }
+.asig-notif-text { flex:1; font-size:13px; }
+.asig-notif-text strong { display:block; font-size:14px; margin-bottom:2px; }
+
+/* RADIO CANAL SELECTED */
+.canal-selected { border-color: var(--primary) !important; background: var(--primary-bg) !important; color: var(--primary); font-weight:500; }
+</style>
+</head>
+<body>
+
+<!-- ========== LOGIN ========== -->
+<div class="login-page" id="login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-badge">TSE</div>
+      <div class="login-inst">Tribunal Supremo de Elecciones</div>
+      <div class="login-dept">Dirección General del Registro Electoral</div>
+    </div>
+    <div class="login-title">Registro de Documentos</div>
+    <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
+    <div class="login-group">
+      <label class="login-label">Usuario</label>
+      <input class="login-input" id="login-user" placeholder="Ingrese su usuario" autocomplete="username">
+    </div>
+    <div class="login-group">
+      <label class="login-label">Contraseña</label>
+      <input class="login-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Iniciar Sesión</button>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);text-align:center">
+      Acceso restringido al personal autorizado del TSE
+    </div>
+  </div>
+</div>
+
+<!-- ========== APP ========== -->
+<div class="app-wrap" id="app-wrap">
+
+<header class="app-header">
+  <div class="header-top">
+    <div class="header-logo">TSE</div>
+    <div class="header-titles">
+      <div class="header-inst">Tribunal Supremo de Elecciones</div>
+      <div class="header-dept">Dirección General del Registro Electoral — Registro de Documentos</div>
+    </div>
+    <div class="header-right">
+      <div class="global-search-wrap">
+        <svg class="global-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="global-search-input" id="global-search" placeholder="Buscar documento por código..." oninput="buscarGlobal(this.value)" onblur="setTimeout(()=>cerrarBusquedaGlobal(),200)" autocomplete="off">
+        <div class="global-search-results" id="global-search-results"></div>
+      </div>
+      <div class="user-pill" id="user-pill">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div>
+          <div class="user-name" id="user-name-display">—</div>
+          <div class="user-role-badge" id="user-role-display">—</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+  <nav class="app-nav">
+    <div class="nav-tab active" onclick="showPage('dashboard')" id="tab-dashboard">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Inicio
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('recibidos')" id="tab-recibidos">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 14.66V20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
+      Docs. Recibidos
+      <span class="nav-badge" id="badge-rec">0</span>
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('enviados')" id="tab-enviados">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Docs. Creados
+      <span class="nav-badge" id="badge-env">0</span>
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('mis-asignados')" id="tab-mis-asignados">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Mis Asignaciones
+      <span class="nav-badge" id="badge-mis-asig">0</span>
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('asignados')" id="tab-asignados">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Asignaciones
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('jornadas')" id="tab-jornadas">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Jornadas y Gastos
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('presupuestos')" id="tab-presupuestos">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Jornadas Extraordinarias
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('reportes')" id="tab-reportes">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Reportes
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('usuarios')" id="tab-usuarios">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Usuarios
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('catalogos')" id="tab-catalogos">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Catálogos
+    </div>
+    <div class="nav-tab hidden" onclick="showPage('configuracion')" id="tab-configuracion">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Configuración
+    </div>
+  </nav>
+</header>
+
+<div class="app-body">
+
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div id="dash-alerts"></div>
+  <div class="dash-grid">
+    <div class="dash-stat"><div class="dash-stat-value" id="ds-rec">0</div><div class="dash-stat-label">Docs. Recibidos</div></div>
+    <div class="dash-stat red"><div class="dash-stat-value" id="ds-env">0</div><div class="dash-stat-label">Docs. Creados</div></div>
+    <div class="dash-stat orange"><div class="dash-stat-value" id="ds-pend">0</div><div class="dash-stat-label">Pendientes</div></div>
+    <div class="dash-stat green"><div class="dash-stat-value" id="ds-res">0</div><div class="dash-stat-label">Resueltos</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Últimos Recibidos</div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('recibidos')">Ver todos</button>
+      </div>
+      <table><thead><tr><th>Código</th><th>Tipo</th><th>Asunto</th><th>Estado</th></tr></thead>
+      <tbody id="dash-rec-tbody"></tbody></table>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Últimos Creados</div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('enviados')">Ver todos</button>
+      </div>
+      <table><thead><tr><th>Código</th><th>Tipo</th><th>Asunto</th><th>Destinatario</th></tr></thead>
+      <tbody id="dash-env-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- RECIBIDOS -->
+<div class="page" id="page-recibidos">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 14.66V20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h5.34"/></svg>Documentos Recibidos</div>
+      <div class="section-actions">
+        <button class="btn btn-primary" id="btn-nuevo-rec" onclick="abrirRec()">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Recibir Documento
+        </button>
+        <button class="btn btn-outline" onclick="exportCSV('recibidos')">CSV</button>
+      </div>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar…" id="search-rec" oninput="filterT('rec')"></div>
+      <select class="fctrl" id="f-rec-tipo" onchange="filterT('rec')"><option value="">Todos los tipos</option></select>
+      <select class="fctrl" id="f-rec-estado" onchange="filterT('rec')"><option value="">Todos los estados</option><option>Pendiente</option><option>Asignado</option><option>Resuelto</option></select>
+      <select class="fctrl" id="f-rec-func" onchange="filterT('rec')"><option value="">Todos los funcionarios</option></select>
+    </div>
+    <table><thead><tr><th>Código</th><th>N.° Documento</th><th>Tipo</th><th>Canal</th><th>Depto / Institución</th><th>Asunto</th><th>Fecha Recibido</th><th>Días</th><th>Plazo</th><th>Vencimiento</th><th>Asignado a</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="rec-tbody"></tbody></table>
+    <div class="pagination"><span id="rec-pag-info"></span><div class="pag-btns" id="rec-pag-btns"></div></div>
+  </div>
+</div>
+
+<!-- ENVIADOS -->
+<div class="page" id="page-enviados">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Documentos Creados</div>
+      <div class="section-actions">
+        <button class="btn btn-secondary" id="btn-nuevo-env" onclick="abrirEnv()">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Crear Documento
+        </button>
+        <button class="btn btn-outline" onclick="exportCSV('enviados')">CSV</button>
+      </div>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar…" id="search-env" oninput="filterT('env')"></div>
+      <select class="fctrl" id="f-env-tipo" onchange="filterT('env')"><option value="">Todos los tipos</option></select>
+    </div>
+    <table><thead><tr><th>Código</th><th>Tipo</th><th>Destinatario</th><th>Asunto</th><th>Tema</th><th>Elaborado por</th><th>Jefatura</th><th>Fecha</th><th>Acciones</th></tr></thead>
+    <tbody id="env-tbody"></tbody></table>
+    <div class="pagination"><span id="env-pag-info"></span><div class="pag-btns" id="env-pag-btns"></div></div>
+  </div>
+</div>
+
+<!-- ASIGNADOS -->
+<div class="page" id="page-asignados">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Documentos Asignados a Funcionario</div>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar…" id="search-asig" oninput="filterT('asig')"></div>
+      <select class="fctrl" id="f-asig-func" onchange="filterT('asig')"><option value="">Todos los funcionarios</option></select>
+      <select class="fctrl" id="f-asig-estado" onchange="filterT('asig')"><option value="">Todos</option><option>Asignado</option><option>Resuelto</option></select>
+    </div>
+    <table><thead><tr><th>Código</th><th>Tipo</th><th>Asunto</th><th>Funcionario</th><th>Instrucciones</th><th>Fecha Recibido</th><th>Plazo</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="asig-tbody"></tbody></table>
+    <div class="pagination"><span id="asig-pag-info"></span><div class="pag-btns" id="asig-pag-btns"></div></div>
+  </div>
+</div>
+
+<!-- JORNADAS -->
+<div class="page" id="page-jornadas">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Jornadas y Gastos de Viaje</div>
+      <button class="btn btn-primary" onclick="populateSels();openModal('modal-jornada');editingJorId=null;resetJor()">+ Registrar Jornada</button>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar…" id="search-jor" oninput="renderJornadas()"></div>
+      <select class="fctrl" id="f-jor-func" onchange="renderJornadas()"><option value="">Todos los funcionarios</option></select>
+    </div>
+    <div style="padding:14px" id="jornadas-list"></div>
+    <div class="pagination">
+      <span>Total gastado <strong id="jor-total-val" style="font-family:monospace">₡0.00</strong></span>
+      <button class="btn btn-outline btn-sm" onclick="exportCSV('jornadas')">Exportar CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTES -->
+<div class="page" id="page-reportes">
+  <div id="rep-content">
+    <!-- Year selector only in reports -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-body" style="padding:12px 18px">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--primary)"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <strong>Año de consulta:</strong>
+          </div>
+          <select class="fctrl" id="rep-año" onchange="cambiarAño()" style="font-weight:600;font-family:monospace">
+            <option>2023</option><option>2024</option><option>2025</option><option selected>2026</option><option>2027</option>
+          </select>
+          <span style="font-size:12px;color:var(--text3)">Todos los reportes usarán el año seleccionado</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Reporte: Documentos Recibidos</div></div>
+        <div class="card-body">
+          <div class="form-grid form-row-2" style="margin-bottom:10px">
+            <div class="form-group"><label class="form-label">Desde</label><input type="date" class="form-control" id="rep-rec-desde"></div>
+            <div class="form-group"><label class="form-label">Hasta</label><input type="date" class="form-control" id="rep-rec-hasta"></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="genReporte('recibidos')">Generar</button>
+            <button class="btn btn-outline btn-sm" onclick="exportCSV('rep-recibidos')">CSV</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Reporte: Documentos Creados</div></div>
+        <div class="card-body">
+          <div class="form-grid form-row-2" style="margin-bottom:10px">
+            <div class="form-group"><label class="form-label">Desde</label><input type="date" class="form-control" id="rep-env-desde"></div>
+            <div class="form-group"><label class="form-label">Hasta</label><input type="date" class="form-control" id="rep-env-hasta"></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-secondary btn-sm" onclick="genReporte('enviados')">Generar</button>
+            <button class="btn btn-outline btn-sm" onclick="exportCSV('rep-enviados')">CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- REPORTE ASIGNACIONES -->
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">Reporte: Asignaciones por Funcionario</div>
+        <div style="display:flex;gap:8px">
+          <select class="fctrl" id="rep-asig-func"><option value="">Todos los funcionarios</option></select>
+          <button class="btn btn-primary btn-sm" onclick="genRepAsignaciones()">Generar</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV('rep-asignaciones')">CSV</button>
+        </div>
+      </div>
+      <div id="rep-asig-content"></div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header" style="background:var(--danger-bg)">
+        <div class="card-title" style="color:var(--danger)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Reporte: Documentos Vencidos y Próximos a Vencer
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-danger btn-sm" onclick="genRepVencidos()">Generar</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV('rep-vencidos')">CSV</button>
+        </div>
+      </div>
+      <div id="rep-vencidos-content" style="padding:14px"></div>
+    </div>
+      <div class="card-header"><div class="card-title" id="rep-title">Resultado</div><button class="btn btn-ghost btn-sm" onclick="document.getElementById('rep-result').style.display='none'">Cerrar</button></div>
+      <table><thead id="rep-thead"></thead><tbody id="rep-tbody"></tbody></table>
+      <div class="pagination"><span id="rep-count"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- USUARIOS -->
+<div class="page" id="page-usuarios">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Gestión de Usuarios</div>
+      <button class="btn btn-primary" onclick="abrirNuevoUsuario()">+ Nuevo Usuario</button>
+    </div>
+    <table>
+      <thead><tr><th>Usuario</th><th>Nombre</th><th>Departamento</th><th>Perfil</th><th>Correo</th><th>Estado</th><th>Acciones</th></tr></thead>
+      <tbody id="usuarios-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MIS ASIGNACIONES (Perfil Creador) -->
+<div class="page" id="page-mis-asignados">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Documentos Asignados a Mí
+      </div>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar por código, asunto…" id="search-mis" oninput="renderMisAsignados()"></div>
+      <select class="fctrl" id="f-mis-estado" onchange="renderMisAsignados()"><option value="">Todos</option><option>Asignado</option><option>Resuelto</option></select>
+    </div>
+    <table>
+      <thead><tr><th>Código</th><th>N.° Documento</th><th>Tipo</th><th>Asunto</th><th>Fecha Recibido</th><th>Días sin resolver</th><th>Plazo</th><th>Estado</th><th>Acciones</th></tr></thead>
+      <tbody id="mis-asig-tbody"></tbody>
+    </table>
+    <div class="pagination"><span id="mis-pag-info"></span><div class="pag-btns" id="mis-pag-btns"></div></div>
+  </div>
+</div>
+
+<!-- PRESUPUESTOS -->
+<div class="page" id="page-presupuestos">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Jornadas Extraordinarias — Unidad de Presupuestos y Costos
+      </div>
+      <button class="btn btn-primary" onclick="populateSels();openModal('modal-jornada');editingJorId=null;resetJor()">+ Registrar Jornada</button>
+    </div>
+    <div class="table-toolbar">
+      <div class="search-wrap"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Buscar por funcionario, destino…" id="search-pres" oninput="renderPresupuestos()"></div>
+      <select class="fctrl" id="f-pres-func" onchange="renderPresupuestos()"><option value="">Todos los funcionarios</option></select>
+      <select class="fctrl" id="f-pres-año" onchange="renderPresupuestos()">
+        <option>2023</option><option>2024</option><option>2025</option><option selected>2026</option><option>2027</option>
+      </select>
+    </div>
+    <div style="padding:14px" id="presupuestos-list"></div>
+    <div class="pagination">
+      <span>Total gastado año seleccionado: <strong id="pres-total-val" style="font-family:monospace;color:var(--success)">₡0.00</strong></span>
+      <button class="btn btn-outline btn-sm" onclick="exportCSV('presupuestos')">Exportar CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- CATALOGOS -->
+<div class="page" id="page-catalogos">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card"><div class="card-header"><div class="card-title">Tipos Documentales</div><button class="btn btn-outline btn-sm" onclick="addCat('tipos')">+ Agregar</button></div><div class="card-body" id="cat-tipos"></div></div>
+    <div class="card"><div class="card-header">
+      <div class="card-title">Remitentes <span style="font-size:10px;color:var(--text3);font-weight:400">(personas que entregan documentos)</span></div>
+      <button class="btn btn-outline btn-sm" onclick="abrirModalRemitente()">+ Agregar</button>
+    </div><div class="card-body" id="cat-remitentes"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Departamentos e Instituciones</div><button class="btn btn-outline btn-sm" onclick="addCat('departamentos')">+ Agregar</button></div><div class="card-body" id="cat-departamentos"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Medios de Entrega</div><button class="btn btn-outline btn-sm" onclick="addCat('medios')">+ Agregar</button></div><div class="card-body" id="cat-medios"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Formas</div><button class="btn btn-outline btn-sm" onclick="addCat('formas')">+ Agregar</button></div><div class="card-body" id="cat-formas"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Programas</div><button class="btn btn-outline btn-sm" onclick="addCat('programas')">+ Agregar</button></div><div class="card-body" id="cat-programas"></div></div>
+    <div class="card"><div class="card-header"><div class="card-title">Jefaturas</div><button class="btn btn-outline btn-sm" onclick="addCat('jefaturas')">+ Agregar</button></div><div class="card-body" id="cat-jefaturas"></div></div>
+  </div>
+</div>
+
+<!-- CONFIGURACION -->
+<div class="page" id="page-configuracion">
+  <div class="card" style="max-width:700px">
+    <div class="card-header"><div class="card-title">Configuración del Sistema</div></div>
+    <div class="card-body">
+      <div style="font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">Alertas de Vencimiento de Plazo</div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Días para advertencia previa</div>
+          <div class="config-desc">Cuántos días antes del vencimiento se muestra la alerta amarilla</div>
+        </div>
+        <div class="config-control">
+          <input type="number" class="form-control" id="cfg-dias-alerta" min="1" max="30" style="width:70px" value="3">
+          <span style="font-size:12px;color:var(--text2)">días</span>
+        </div>
+      </div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Mostrar alertas en el Dashboard</div>
+          <div class="config-desc">Banners de advertencia al ingresar al sistema</div>
+        </div>
+        <div class="config-control">
+          <select class="form-control" id="cfg-alertas-dash" style="width:100px">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div style="font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">Notificaciones por Correo</div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Servidor SMTP</div>
+          <div class="config-desc">Para envío real de notificaciones (uso futuro)</div>
+        </div>
+        <div class="config-control">
+          <input type="text" class="form-control" id="cfg-smtp" placeholder="smtp.tse.go.cr" style="width:200px">
+        </div>
+      </div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Puerto SMTP</div>
+        </div>
+        <div class="config-control">
+          <input type="number" class="form-control" id="cfg-smtp-port" placeholder="587" style="width:80px">
+        </div>
+      </div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Remitente de notificaciones</div>
+        </div>
+        <div class="config-control">
+          <input type="email" class="form-control" id="cfg-remitente" placeholder="sistema@tse.go.cr" style="width:220px">
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" onclick="guardarConfig()">Guardar Configuración</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end app-body -->
+</div><!-- end app-wrap -->
+
+<!-- ===== MODAL RECIBIR ===== -->
+<div class="modal-overlay" id="modal-recibir">
+  <div class="modal" style="width:700px">
+    <div class="modal-header">
+      <div><div class="modal-title">Recepción de Documentación en Oficina</div><div class="modal-sub">Dirección General del Registro Electoral</div></div>
+      <button class="modal-close" onclick="closeModal('modal-recibir')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="rec-edit-id">
+      <div class="form-section">
+        <div class="form-section-title">Código e Identificación</div>
+        <div class="form-grid form-row-2" style="margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label">Código del Sistema (automático)</label>
+            <div class="code-display" id="rec-codigo-display">Se generará al guardar</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fecha de Recibido</label>
+            <div class="form-control-static" id="rec-fecha-reg"></div>
+          </div>
+        </div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label req">Departamento / Institución</label>
+            <select class="form-control" id="rec-depto"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ó Programa</label>
+            <select class="form-control" id="rec-prog"></select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label req">Canal de Ingreso</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:white;transition:0.15s" id="canal-lbl-ventanilla">
+              <input type="radio" name="rec-canal" value="Ventanilla física" onchange="updateCanalStyle()"> 🏢 Ventanilla física
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:white;transition:0.15s" id="canal-lbl-interna">
+              <input type="radio" name="rec-canal" value="Dependencia interna" onchange="updateCanalStyle()"> 🏛️ Dependencia interna
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:white;transition:0.15s" id="canal-lbl-externo">
+              <input type="radio" name="rec-canal" value="Externo directo" onchange="updateCanalStyle()"> 📬 Externo directo
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:6px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:white;transition:0.15s" id="canal-lbl-correo">
+              <input type="radio" name="rec-canal" value="Correo electrónico" onchange="updateCanalStyle()"> 📧 Correo electrónico
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Datos del Documento</div>
+        <div class="form-grid form-row-2" style="margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label req">Tipo Documental</label>
+            <select class="form-control" id="rec-tipo" onchange="updateRecCodigo()"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Forma</label>
+            <select class="form-control" id="rec-forma"></select>
+          </div>
+        </div>
+        <div class="form-grid form-row-4">
+          <div class="form-group" style="grid-column:span 2">
+            <label class="form-label">N.° Documento Original</label>
+            <input class="form-control" id="rec-ndoc" placeholder="Sin número">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Plazo (días hábiles)</label>
+            <input class="form-control" type="number" id="rec-plazo" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Folios</label>
+            <input class="form-control" type="number" id="rec-folios" min="1">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:10px;max-width:200px">
+          <label class="form-label">Fecha del Documento</label>
+          <input class="form-control" type="date" id="rec-fdoc">
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Entrega</div>
+        <div class="form-grid form-row-3">
+          <div class="form-group">
+            <label class="form-label">Medio de Entrega</label>
+            <select class="form-control" id="rec-medio"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Persona que Entrega <span style="font-size:10px;color:var(--text3)">(remitente)</span></label>
+            <select class="form-control" id="rec-entrega"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Persona que Recibe <span style="font-size:10px;color:var(--text3)">(funcionario)</span></label>
+            <select class="form-control" id="rec-recibe"></select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label req">Asunto</label>
+        <textarea class="form-control" id="rec-asunto" rows="2"></textarea>
+      </div>
+      <div class="form-grid form-row-2">
+        <div class="form-group">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" id="rec-obs"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hipervínculo</label>
+          <input class="form-control" id="rec-hiper" placeholder="https://...">
+          <div style="margin-top:6px">
+            <label class="form-label">Vinculado a</label>
+            <div class="input-group">
+              <input class="form-control" id="rec-vinculo" placeholder="Código documento" style="font-family:monospace;font-size:11px">
+              <button class="btn btn-outline btn-sm" onclick="buscarVinculo('rec')">Vincular</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-recibir')">Cancelar</button>
+        <button class="btn btn-outline" onclick="guardarRec(false)">Guardar y Continuar</button>
+        <button class="btn btn-primary" onclick="guardarRec(true)">Guardar y Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL CREAR ENVIADO ===== -->
+<div class="modal-overlay" id="modal-enviado">
+  <div class="modal" style="width:700px">
+    <div class="modal-header">
+      <div><div class="modal-title">Información Documento Creado</div><div class="modal-sub">Dirección General del Registro Electoral</div></div>
+      <button class="modal-close" onclick="closeModal('modal-enviado')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="env-edit-id">
+      <div class="form-section">
+        <div class="form-section-title">Identificación</div>
+        <div class="form-grid form-row-2" style="margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label req">Tipo Documental</label>
+            <select class="form-control" id="env-tipo" onchange="updateEnvCodigo()"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Código del Sistema (automático)</label>
+            <div class="code-display" id="env-codigo-display">Se generará al guardar</div>
+          </div>
+        </div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label">Fecha de Registro</label>
+            <div class="form-control-static" id="env-fecha-reg"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fecha del Documento</label>
+            <input class="form-control" type="date" id="env-fdoc">
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Destinatario</div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label">Destinatario Interno</label>
+            <select class="form-control" id="env-dest-int"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">ó Destinatario Externo</label>
+            <select class="form-control" id="env-dest-ext"></select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label">Otras dependencias</label>
+          <textarea class="form-control" id="env-otras" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Elaboración</div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label req">Elaborado por</label>
+            <select class="form-control" id="env-elaborado"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medio de Entrega</label>
+            <select class="form-control" id="env-medio"></select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label req">Asunto</label>
+        <textarea class="form-control" id="env-asunto" rows="2"></textarea>
+      </div>
+      <div class="form-grid form-row-2" style="margin-bottom:10px">
+        <div class="form-group"><label class="form-label">Tema</label><input class="form-control" id="env-tema"></div>
+        <div class="form-group"><label class="form-label">Hipervínculo</label><input class="form-control" id="env-hiper" placeholder="https://..."></div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label class="form-label">Observaciones</label>
+        <textarea class="form-control" id="env-obs"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Responde a (vincular)</label>
+        <div class="input-group" style="max-width:320px">
+          <input class="form-control" id="env-vinculo" placeholder="Código documento" style="font-family:monospace;font-size:11px">
+          <button class="btn btn-outline btn-sm" onclick="buscarVinculo('env')">Vincular</button>
+        </div>
+        <div id="env-vinculo-info" style="font-size:11px;color:var(--primary);margin-top:4px"></div>
+      </div>
+      <div class="form-section" style="margin-top:12px">
+        <div class="form-section-title">Revisión por Jefatura</div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label req">Jefatura Principal</label>
+            <select class="form-control" id="env-jef-principal"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Jefatura Alterna (opcional)</label>
+            <select class="form-control" id="env-jef-alterna"></select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label">Estado de Revisión</label>
+          <select class="form-control" id="env-estado-rev" style="max-width:200px">
+            <option value="Pendiente revisión">Pendiente revisión</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Aprobado">Aprobado</option>
+            <option value="Devuelto">Devuelto con observaciones</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-enviado')">Cancelar</button>
+        <button class="btn btn-outline" onclick="guardarEnv(false)">Guardar y Continuar</button>
+        <button class="btn btn-secondary" onclick="guardarEnv(true)">Guardar y Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL JORNADA ===== -->
+<div class="modal-overlay" id="modal-jornada">
+  <div class="modal" style="width:580px">
+    <div class="modal-header"><div class="modal-title">Jornada / Gasto de Viaje</div><button class="modal-close" onclick="closeModal('modal-jornada')">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="jor-id">
+      <div class="form-grid form-row-2">
+        <div class="form-group"><label class="form-label req">Funcionario</label><select class="form-control" id="jor-func"></select></div>
+        <div class="form-group"><label class="form-label req">Destino</label><input class="form-control" id="jor-destino"></div>
+        <div class="form-group"><label class="form-label req">Fecha Salida</label><input class="form-control" type="date" id="jor-salida"></div>
+        <div class="form-group"><label class="form-label req">Fecha Regreso</label><input class="form-control" type="date" id="jor-regreso"></div>
+        <div class="form-group"><label class="form-label">Propósito</label><input class="form-control" id="jor-prop"></div>
+        <div class="form-group"><label class="form-label">Transporte</label><select class="form-control" id="jor-trans"><option>Vehículo institucional</option><option>Vehículo propio</option><option>Taxi/Uber</option><option>Autobús</option><option>Avión</option></select></div>
+      </div>
+      <div class="separator"></div>
+      <div style="font-size:11px;font-weight:600;color:var(--primary);margin-bottom:10px;text-transform:uppercase">Desglose de Gastos (₡)</div>
+      <div class="form-grid form-row-3">
+        <div class="form-group"><label class="form-label">Hospedaje</label><input class="form-control" type="number" id="jor-hosp" value="0" min="0" oninput="calcJorTotal()"></div>
+        <div class="form-group"><label class="form-label">Alimentación</label><input class="form-control" type="number" id="jor-alim" value="0" min="0" oninput="calcJorTotal()"></div>
+        <div class="form-group"><label class="form-label">Transporte</label><input class="form-control" type="number" id="jor-tc" value="0" min="0" oninput="calcJorTotal()"></div>
+        <div class="form-group"><label class="form-label">Combustible</label><input class="form-control" type="number" id="jor-comb" value="0" min="0" oninput="calcJorTotal()"></div>
+        <div class="form-group"><label class="form-label">Otros</label><input class="form-control" type="number" id="jor-otros" value="0" min="0" oninput="calcJorTotal()"></div>
+        <div class="form-group"><label class="form-label">Total</label><div class="form-control-static" id="jor-total">₡0.00</div></div>
+      </div>
+      <div class="form-group" style="margin-top:10px"><label class="form-label">Observaciones</label><textarea class="form-control" id="jor-obs"></textarea></div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-jornada')">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarJornada()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL ASIGNAR ===== -->
+<div class="modal-overlay" id="modal-asignar">
+  <div class="modal" style="width:500px">
+    <div class="modal-header"><div class="modal-title">Asignar a Funcionario(s)</div><button class="modal-close" onclick="closeModal('modal-asignar')">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="asig-id">
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Documento</label>
+        <input class="form-control" id="asig-doc" disabled>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label req">Funcionario Principal</label>
+        <select class="form-control" id="asig-func"></select>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Funcionario(s) Adicional(es)</label>
+        <div id="asig-adicionales-wrap" style="display:flex;flex-direction:column;gap:6px;margin-bottom:6px"></div>
+        <button class="btn btn-outline btn-sm" type="button" onclick="agregarAsigAdicional()">+ Agregar otro funcionario</button>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Instrucciones</label>
+        <textarea class="form-control" id="asig-instr" placeholder="Indicaciones para los funcionarios asignados…"></textarea>
+      </div>
+      <div id="asig-resolucion-section" style="display:none;border:1px solid #b8cce4;border-radius:var(--radius);background:#f0f6ff;padding:14px;margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Registro de Resolución</div>
+        <div class="form-grid form-row-2" style="margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label">Tipo documental de respuesta</label>
+            <select class="form-control" id="asig-res-tipo"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Código / N.° del documento de respuesta</label>
+            <input class="form-control" id="asig-res-codigo" placeholder="Ej: OFI-2026-0023">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Anotaciones / Detalle de la resolución</label>
+          <textarea class="form-control" id="asig-res-notas" rows="3" placeholder="Describa cómo se atendió el documento, acciones tomadas, referencias…"></textarea>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label">Fecha de resolución</label>
+          <input class="form-control" type="date" id="asig-res-fecha" style="max-width:180px">
+        </div>
+      </div>
+      <div style="margin-bottom:12px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:500;color:var(--primary)">
+          <input type="checkbox" id="asig-marcar-resuelto" onchange="toggleResolucion(this)"> Marcar como resuelto e ingresar datos de resolución
+        </label>
+      </div>
+      <div style="background:var(--primary-bg);border:1px solid #b8cce4;border-radius:var(--radius);padding:12px;margin-bottom:12px">
+        <div style="font-size:11px;font-weight:600;color:var(--primary);margin-bottom:8px;text-transform:uppercase">Notificación por correo</div>
+        <div class="email-field">
+          <label>Para:</label>
+          <input class="form-control" id="asig-email" type="email" placeholder="correo@tse.go.cr" style="font-size:12px">
+        </div>
+        <div style="font-size:11px;color:var(--text3)">El correo del funcionario asignado (configurado en su perfil de usuario)</div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-asignar')">Cancelar</button>
+        <button class="btn btn-outline" onclick="confirmarAsignar(false)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 010 1.18A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+          Asignar y Ver Correo
+        </button>
+        <button class="btn btn-primary" onclick="confirmarAsignar(true)">Asignar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL VER ===== -->
+<div class="modal-overlay" id="modal-ver">
+  <div class="modal" style="width:660px">
+    <div class="modal-header"><div class="modal-title" id="modal-ver-title">Detalle</div><button class="modal-close" onclick="closeModal('modal-ver')">×</button></div>
+    <div class="modal-body" id="modal-ver-body"></div>
+  </div>
+</div>
+
+<!-- ===== MODAL USUARIO ===== -->
+<div class="modal-overlay" id="modal-usuario">
+  <div class="modal" style="width:440px">
+    <div class="modal-header"><div class="modal-title" id="modal-user-title">Nuevo Usuario</div><button class="modal-close" onclick="closeModal('modal-usuario')">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="usr-edit-id">
+      <div class="form-group" style="margin-bottom:12px"><label class="form-label req">Nombre Completo</label><input class="form-control" id="usr-nombre"></div>
+      <div class="form-group" style="margin-bottom:12px"><label class="form-label req">Usuario (login)</label><input class="form-control" id="usr-login" placeholder="Ej: jperez"></div>
+      <div class="form-group" style="margin-bottom:12px"><label class="form-label req">Contraseña</label><input class="form-control" type="password" id="usr-pass" placeholder="Mínimo 4 caracteres"></div>
+      <div class="form-group" style="margin-bottom:12px"><label class="form-label">Departamento / Unidad</label><input class="form-control" id="usr-depto" placeholder="Ej: Departamento Legal"></div>
+      <div class="form-group" style="margin-bottom:12px"><label class="form-label">Correo Electrónico</label><input class="form-control" type="email" id="usr-email" placeholder="usuario@tse.go.cr"></div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label req">Perfil</label>
+        <select class="form-control" id="usr-perfil">
+          <option value="admin">Administrador del Sistema</option>
+          <option value="recepcion">Recepción Documental</option>
+          <option value="creador">Creador de Documentos</option>
+          <option value="reportes">Consulta y Reportes</option>
+          <option value="presupuestos">Unidad de Presupuestos y Costos</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Estado</label>
+        <select class="form-control" id="usr-estado"><option value="activo">Activo</option><option value="inactivo">Inactivo</option></select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-usuario')">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarUsuario()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL NOTIF EMAIL ===== -->
+<div class="modal-overlay" id="modal-email">
+  <div class="modal" style="width:560px">
+    <div class="modal-header"><div class="modal-title">Vista Previa — Notificación por Correo</div><button class="modal-close" onclick="closeModal('modal-email')">×</button></div>
+    <div class="modal-body">
+      <div class="notif-sent" id="notif-sent-msg">✓ Correo enviado exitosamente (simulado)</div>
+      <div class="email-field"><label>Para:</label><input class="form-control" id="email-para" type="email" style="font-size:12px"></div>
+      <div class="email-field"><label>Asunto:</label><input class="form-control" id="email-asunto-field" style="font-size:12px"></div>
+      <div style="font-size:11px;font-weight:600;color:var(--text2);margin:10px 0 6px;text-transform:uppercase">Cuerpo del mensaje:</div>
+      <div class="email-preview" id="email-cuerpo"></div>
+      <div style="background:var(--warning-bg);border:1px solid #f5d88a;border-radius:var(--radius);padding:10px 12px;font-size:11px;color:#7a4a00;margin-bottom:14px">
+        <strong>Modo simulado:</strong> Este es el correo que se enviará cuando se configure el servidor SMTP en Configuración. Puede copiar el contenido o marcar como enviado.
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-email')">Cerrar</button>
+        <button class="btn btn-outline" onclick="copiarEmail()">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copiar
+        </button>
+        <button class="btn btn-success" onclick="marcarEmailEnviado()">✓ Marcar como enviado</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL REMITENTE ===== -->
+<div class="modal-overlay" id="modal-remitente">
+  <div class="modal" style="width:420px">
+    <div class="modal-header"><div class="modal-title" id="modal-rem-title">Nuevo Remitente</div><button class="modal-close" onclick="closeModal('modal-remitente')">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="rem-edit-idx">
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label req">Nombre completo</label>
+        <input class="form-control" id="rem-nombre" placeholder="Ej: Juan Pérez Rodríguez">
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Institución / Organización</label>
+        <input class="form-control" id="rem-institucion" placeholder="Ej: Ministerio de Gobernación">
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Teléfono / Contacto</label>
+        <input class="form-control" id="rem-contacto" placeholder="Ej: 2222-3333">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-remitente')">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarRemitente()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL RESPONDER (Creador) ===== -->
+<div class="modal-overlay" id="modal-responder">
+  <div class="modal" style="width:500px">
+    <div class="modal-header"><div class="modal-title">Registrar Respuesta al Documento</div><button class="modal-close" onclick="closeModal('modal-responder')">×</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="resp-doc-id">
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">Documento</label>
+        <input class="form-control" id="resp-doc-nombre" disabled>
+      </div>
+      <div style="background:var(--primary-bg);border:1px solid #b8cce4;border-radius:var(--radius);padding:14px;margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Documento de Respuesta</div>
+        <div class="form-grid form-row-2">
+          <div class="form-group">
+            <label class="form-label req">Tipo documental de respuesta</label>
+            <select class="form-control" id="mis-res-tipo"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label req">N.° del documento de respuesta</label>
+            <input class="form-control" id="mis-res-ndoc" placeholder="Ej: OFI-2026-0045">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:10px">
+          <label class="form-label">Fecha de la respuesta</label>
+          <input class="form-control" type="date" id="mis-res-fecha" style="max-width:180px">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label req">Observaciones / Detalle de la atención</label>
+        <textarea class="form-control" id="mis-res-obs" rows="4" placeholder="Describa las acciones tomadas, gestiones realizadas, referencias…"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="closeModal('modal-responder')">Cancelar</button>
+        <button class="btn btn-success" onclick="guardarRespuesta()">✓ Guardar y Marcar Resuelto</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL FUNCIONARIO (Catálogo) ===== -->
+<!-- Eliminado: los funcionarios ahora son los usuarios del sistema -->
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ======================== STORAGE ========================
+const S = {
+  g: k => { try { return JSON.parse(localStorage.getItem('dgre2_'+k)||'null'); } catch(e){ return null; } },
+  s: (k,v) => localStorage.setItem('dgre2_'+k, JSON.stringify(v))
+};
+
+// ======================== INITIAL DATA ========================
+let usuarios = S.g('usuarios') || [
+  { id: 'u1', nombre: 'Administrador', login: 'admin', pass: 'admin123', perfil: 'admin', estado: 'activo', email: 'admin@tse.go.cr' }
+];
+
+let catalogos = S.g('catalogos') || {
+  tipos: ['Oficio','Circular','Memorando','Resolución','Acuerdo','Nota','Informe','Dictamen'],
+  remitentes: [
+    {nombre:'Ana García', institucion:'Tribunal Supremo de Elecciones', contacto:''},
+    {nombre:'Luis Mora', institucion:'Departamento Administrativo', contacto:''},
+    {nombre:'María Rodríguez', institucion:'Recursos Humanos', contacto:''},
+    {nombre:'Carlos Jiménez', institucion:'Departamento de TI', contacto:''},
+    {nombre:'Sandra Vargas', institucion:'Jefatura', contacto:''}
+  ],
+  departamentos: ['Departamento Legal','Departamento Administrativo','Departamento de TI','Jefatura','Secretaría','Recursos Humanos','Tribunal Supremo de Elecciones','Ministerio de Gobernación'],
+  medios: ['Mensajero','Correo electrónico','Fax','En mano','Correo postal'],
+  formas: ['Original','Copia','Digital','Certificada'],
+  programas: ['Programa 1 - Registral','Programa 2 - Electoral','Programa 3 - Capacitación'],
+  jefaturas: ['Jefatura DGRE','Jefatura Administrativa','Jefatura Legal','Jefatura TI']
+};
+
+let config = S.g('config') || {
+  diasAlerta: 3,
+  alertasDash: true,
+  smtp: '',
+  smtpPort: 587,
+  remitente: 'sistema@tse.go.cr'
+};
+
+let recibidos = S.g('recibidos') || [];
+let enviados  = S.g('enviados')  || [];
+let jornadas  = S.g('jornadas')  || [];
+
+let currentUser = null;
+let añoActual = 2026;
+let recPage=1, envPage=1, asigPage=1;
+const PER = 12;
+let editingRecId=null, editingEnvId=null, editingJorId=null;
+
+function saveAll() {
+  S.s('recibidos', recibidos);
+  S.s('enviados', enviados);
+  S.s('jornadas', jornadas);
+  S.s('catalogos', catalogos);
+  S.s('usuarios', usuarios);
+}
+
+// ======================== FUNCIONARIOS HELPERS ========================
+// Funcionarios = usuarios activos del sistema
+function funcNombres() {
+  return usuarios.filter(u=>u.estado==='activo').map(u=>u.nombre);
+}
+function funcDepto(nombre) {
+  const u = usuarios.find(u=>u.nombre===nombre);
+  return u?.depto || '';
+}
+function funcEmail(nombre) {
+  const u = usuarios.find(u=>u.nombre===nombre);
+  return u?.email || '';
+}
+// Remitentes = personas externas que entregan documentos
+function remitentesNombres() {
+  return (catalogos.remitentes||[]).map(r => typeof r==='object' ? r.nombre : r);
+}
+
+// ======================== PERFILES ========================
+const PERMS = {
+  admin:       { tabs: ['dashboard','recibidos','enviados','asignados','mis-asignados','jornadas','presupuestos','reportes','usuarios','catalogos','configuracion'] },
+  recepcion:   { tabs: ['dashboard','recibidos','asignados','mis-asignados'] },
+  creador:     { tabs: ['dashboard','enviados','mis-asignados'] },
+  reportes:    { tabs: ['dashboard','recibidos','enviados','asignados','mis-asignados','reportes'] },
+  presupuestos:{ tabs: ['dashboard','presupuestos','mis-asignados'] }
+};
+
+const ROLE_LABELS = { admin:'Administrador', recepcion:'Recepción', creador:'Creador', reportes:'Reportes', presupuestos:'Presupuestos y Costos' };
+const ROLE_BADGES = { admin:'b-admin', recepcion:'b-recep', creador:'b-crea', reportes:'b-rep', presupuestos:'b-asig' };
+
+// ======================== LOGIN ========================
+function doLogin() {
+  const login = document.getElementById('login-user').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const user  = usuarios.find(u => u.login===login && u.pass===pass && u.estado==='activo');
+  if (!user) { document.getElementById('login-error').classList.add('show'); return; }
+  document.getElementById('login-error').classList.remove('show');
+  currentUser = user;
+  applyPermissions();
+  document.getElementById('login-page').style.display = 'none';
+  document.getElementById('app-wrap').classList.add('show');
+  document.getElementById('user-name-display').textContent = user.nombre;
+  document.getElementById('user-role-display').textContent = ROLE_LABELS[user.perfil]||user.perfil;
+  document.getElementById('user-avatar').textContent = user.nombre.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  añoActual = new Date().getFullYear();
+  populateSels();
+  updateBadges();
+  showPage('dashboard');
+  // Mostrar banner de asignaciones pendientes
+  setTimeout(()=>mostrarBannerAsignaciones(), 400);
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('app-wrap').classList.remove('show');
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function applyPermissions() {
+  if (!currentUser) return;
+  const allowed = PERMS[currentUser.perfil]?.tabs || [];
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    const onclick = tab.getAttribute('onclick')||'';
+    const match = onclick.match(/'([^']+)'/);
+    if (!match) return;
+    const pg = match[1];
+    tab.classList.toggle('hidden', !allowed.includes(pg));
+  });
+}
+
+function canDo(action) {
+  if (!currentUser) return false;
+  const p = currentUser.perfil;
+  const rules = {
+    recibir:   ['admin','recepcion'],
+    crear:     ['admin','creador'],
+    asignar:   ['admin','recepcion'],
+    resolver:  ['admin','recepcion'],
+    eliminar:  ['admin'],
+    catalogos: ['admin'],
+    usuarios:  ['admin'],
+    reportes:  ['admin','reportes'],
+    jornadas:  ['admin','recepcion','creador','reportes']
+  };
+  return (rules[action]||[]).includes(p);
+}
+
+// ======================== NAVIGATION ========================
+function showPage(p) {
+  if (!currentUser) return;
+  const allowed = PERMS[currentUser.perfil]?.tabs || [];
+  if (!allowed.includes(p)) { toast('No tiene permisos para acceder a esta sección','error'); return; }
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(n => {
+    if ((n.getAttribute('onclick')||'').includes("'"+p+"'")) n.classList.add('active');
+  });
+  const actions = {
+    dashboard:    renderDashboard,
+    recibidos:    () => { populateSels(); recPage=1; renderRecibidos(); },
+    enviados:     () => { populateSels(); envPage=1; renderEnviados(); },
+    asignados:    () => { populateSels(); asigPage=1; renderAsignados(); },
+    'mis-asignados': () => { populateSels(); renderMisAsignados(); },
+    jornadas:     renderJornadas,
+    presupuestos: renderPresupuestos,
+    reportes:     renderReportes,
+    usuarios:     renderUsuarios,
+    catalogos:    renderCatalogos,
+    configuracion: renderConfig
+  };
+  if (actions[p]) actions[p]();
+}
+
+function cambiarAño() {
+  const sel = document.getElementById('rep-año');
+  if (sel) añoActual = parseInt(sel.value);
+  updateBadges();
+  renderDashboard();
+}
+
+// ======================== CÓDIGO AUTOMÁTICO ========================
+function tipoAbrev(tipo) {
+  if (!tipo) return 'DOC';
+  const map = { 'Oficio':'OFI','Circular':'CIR','Memorando':'MEM','Resolución':'RES','Acuerdo':'ACU','Nota':'NOT','Informe':'INF','Dictamen':'DIC' };
+  return map[tipo] || tipo.substring(0,3).toUpperCase();
+}
+
+function genCodigoRec(tipo) {
+  const abrev = tipoAbrev(tipo);
+  const count = recibidos.filter(r=>r.año===añoActual && r.tipo===tipo).length + 1;
+  return `REC-${abrev}-${añoActual}-${String(count).padStart(4,'0')}`;
+}
+
+function genCodigoEnv(tipo) {
+  const abrev = tipoAbrev(tipo);
+  const count = enviados.filter(e=>e.año===añoActual && e.tipo===tipo).length + 1;
+  return `${abrev}-${añoActual}-${String(count).padStart(4,'0')}`;
+}
+
+function updateRecCodigo() {
+  const tipo = document.getElementById('rec-tipo').value;
+  if (!editingRecId && tipo) {
+    document.getElementById('rec-codigo-display').textContent = genCodigoRec(tipo);
+  }
+}
+
+function updateEnvCodigo() {
+  const tipo = document.getElementById('env-tipo').value;
+  if (!editingEnvId && tipo) {
+    document.getElementById('env-codigo-display').textContent = genCodigoEnv(tipo);
+  }
+}
+
+// ======================== MODAL ========================
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function abrirRec() {
+  if (!canDo('recibir')) { toast('Sin permisos para recibir documentos','error'); return; }
+  populateSels();
+  editingRecId = null;
+  resetRec();
+  const now = new Date();
+  document.getElementById('rec-fecha-reg').textContent = now.toLocaleDateString('es-CR')+' '+now.toLocaleTimeString('es-CR');
+  document.getElementById('rec-edit-id').value = '';
+  document.getElementById('rec-fdoc').value = today();
+  updateRecCodigo();
+  openModal('modal-recibir');
+}
+
+function abrirEnv() {
+  if (!canDo('crear')) { toast('Sin permisos para crear documentos','error'); return; }
+  populateSels();
+  editingEnvId = null;
+  resetEnv();
+  const now = new Date();
+  document.getElementById('env-fecha-reg').textContent = now.toLocaleDateString('es-CR')+' '+now.toLocaleTimeString('es-CR');
+  document.getElementById('env-edit-id').value = '';
+  document.getElementById('env-fdoc').value = today();
+  updateEnvCodigo();
+  openModal('modal-enviado');
+}
+
+function resetRec() {
+  ['rec-ndoc','rec-asunto','rec-obs','rec-hiper','rec-vinculo'].forEach(id=>{ const el=document.getElementById(id);if(el)el.value=''; });
+  document.getElementById('rec-plazo').value='';
+  document.getElementById('rec-folios').value='';
+  document.getElementById('rec-codigo-display').textContent='Se generará al guardar';
+  // Reset canal radios
+  document.querySelectorAll('input[name="rec-canal"]').forEach(r=>{ r.checked=false; r.closest('label').classList.remove('canal-selected'); });
+}
+
+function resetEnv() {
+  ['env-asunto','env-tema','env-obs','env-hiper','env-vinculo','env-otras'].forEach(id=>{ const el=document.getElementById(id);if(el)el.value=''; });
+  const vi=document.getElementById('env-vinculo-info');if(vi)vi.textContent='';
+  document.getElementById('env-codigo-display').textContent='Se generará al guardar';
+}
+
+// ======================== SELECTS ========================
+function populateSels() {
+  const nombres = funcNombres();
+  const remitentes = remitentesNombres();
+  const pairs = [
+    ['rec-tipo',catalogos.tipos,'— Seleccione —'],['env-tipo',catalogos.tipos,'— Seleccione —'],
+    ['f-rec-tipo',catalogos.tipos,'Todos los tipos'],['f-env-tipo',catalogos.tipos,'Todos los tipos'],
+    ['rec-depto',catalogos.departamentos,'— Seleccione —'],['rec-prog',catalogos.programas,'— Ninguno —'],
+    ['env-dest-int',catalogos.departamentos,'— Seleccione —'],['env-dest-ext',catalogos.departamentos,'— Externo —'],
+    ['rec-medio',catalogos.medios,'— Seleccione —'],['env-medio',catalogos.medios,'— Seleccione —'],
+    ['rec-forma',catalogos.formas,'— Seleccione —'],
+    ['rec-entrega',remitentes,'— Seleccione —'],
+    ['rec-recibe',nombres,'— Seleccione —'],
+    ['env-elaborado',nombres,'— Seleccione —'],
+    ['jor-func',nombres,'— Seleccione —'],
+    ['asig-func',nombres,'— Seleccione —'],
+    ['f-asig-func',nombres,'Todos'],
+    ['f-rec-func',nombres,'Todos los funcionarios'],
+    ['f-jor-func',nombres,'Todos'],
+    ['rep-asig-func',nombres,'Todos los funcionarios'],
+    ['env-jef-principal',catalogos.jefaturas,'— Seleccione —'],
+    ['env-jef-alterna',catalogos.jefaturas,'— Ninguna —'],
+    ['asig-res-tipo',catalogos.tipos,'— Seleccione tipo —'],
+    ['f-pres-func',nombres,'Todos los funcionarios'],
+    ['mis-res-tipo',catalogos.tipos,'— Seleccione tipo —'],
+  ];
+  pairs.forEach(([id,opts,def])=>{
+    const el=document.getElementById(id); if(!el) return;
+    const v=el.value;
+    el.innerHTML=`<option value="">${def}</option>`+opts.map(o=>`<option value="${o}">${o}</option>`).join('');
+    if(v) el.value=v;
+  });
+}
+
+// ======================== PLAZO HELPERS ========================
+function calcFechaVencimiento(fechaRecibido, plazo) {
+  if (!fechaRecibido || !plazo || parseInt(plazo) <= 0) return null;
+  const d = new Date(fechaRecibido);
+  let diasHabiles = parseInt(plazo);
+  while (diasHabiles > 0) {
+    d.setDate(d.getDate() + 1);
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) diasHabiles--;
+  }
+  return d;
+}
+
+function getPlazoStatus(doc) {
+  if (!doc.plazo || parseInt(doc.plazo) <= 0) return { status: 'sin-plazo', label: '—', dias: null };
+  if (doc.estado === 'Resuelto') return { status: 'resuelto', label: 'Resuelto', dias: null };
+  const venc = calcFechaVencimiento(doc.fechaRecibido, doc.plazo);
+  if (!venc) return { status: 'sin-plazo', label: '—', dias: null };
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  const vencD = new Date(venc); vencD.setHours(0,0,0,0);
+  const diff = Math.round((vencD - hoy) / 86400000);
+  if (diff < 0) return { status: 'vencido', label: `Vencido (${Math.abs(diff)}d)`, dias: diff };
+  if (diff <= (config.diasAlerta||3)) return { status: 'proximo', label: `Vence en ${diff}d`, dias: diff };
+  return { status: 'ok', label: `${diff}d restantes`, dias: diff };
+}
+
+function plazoBadge(doc) {
+  const p = getPlazoStatus(doc);
+  if (p.status === 'sin-plazo') return '<span style="color:var(--text3);font-size:11px">—</span>';
+  if (p.status === 'resuelto') return '<span class="plazo-chip ok">✓ Resuelto</span>';
+  if (p.status === 'vencido') return `<span class="plazo-chip vencido">⚠ ${p.label}</span>`;
+  if (p.status === 'proximo') return `<span class="plazo-chip proximo">⏰ ${p.label}</span>`;
+  return `<span class="plazo-chip ok">${p.label}</span>`;
+}
+
+// ======================== GUARDAR RECIBIDO ========================
+function guardarRec(cerrar) {
+  const asunto = document.getElementById('rec-asunto').value.trim();
+  const tipo   = document.getElementById('rec-tipo').value;
+  if (!asunto||!tipo) { toast('Complete los campos obligatorios','error'); return; }
+  const now = new Date();
+  const isEdit = !!editingRecId;
+  const existing = isEdit ? recibidos.find(r=>r.id===editingRecId) : null;
+
+  const codigo = isEdit ? existing.codigo : genCodigoRec(tipo);
+
+  const doc = {
+    id: isEdit ? editingRecId : newId(),
+    codigo,
+    tipo,
+    departamento: document.getElementById('rec-depto').value,
+    programa:     document.getElementById('rec-prog').value,
+    forma:        document.getElementById('rec-forma').value,
+    ndoc:         document.getElementById('rec-ndoc').value||'Sin número',
+    plazo:        document.getElementById('rec-plazo').value,
+    folios:       document.getElementById('rec-folios').value,
+    fechaDoc:     document.getElementById('rec-fdoc').value,
+    fechaRecibido: isEdit ? existing.fechaRecibido : now.toISOString(),
+    medio:        document.getElementById('rec-medio').value,
+    personaEntrega: document.getElementById('rec-entrega').value,
+    personaRecibe:  document.getElementById('rec-recibe').value,
+    asunto, observaciones: document.getElementById('rec-obs').value,
+    hipervinculo: document.getElementById('rec-hiper').value,
+    vinculo:      document.getElementById('rec-vinculo').value,
+    canal:        document.querySelector('input[name="rec-canal"]:checked')?.value || '',
+    estado:       isEdit ? existing.estado : 'Pendiente',
+    funcionarioAsignado: isEdit ? existing.funcionarioAsignado : '',
+    instrucciones: isEdit ? existing.instrucciones : '',
+    año: new Date().getFullYear(),
+    creadoPor: currentUser?.nombre||''
+  };
+
+  if (isEdit) { const i=recibidos.findIndex(r=>r.id===editingRecId); recibidos[i]=doc; toast('Documento actualizado','success'); }
+  else { recibidos.unshift(doc); toast('Documento recibido: '+codigo,'success'); }
+  saveAll(); updateBadges();
+  if (cerrar) { closeModal('modal-recibir'); renderRecibidos(); }
+  else { resetRec(); editingRecId=null; document.getElementById('rec-fdoc').value=today(); updateRecCodigo(); }
+}
+
+// ======================== GUARDAR ENVIADO ========================
+function guardarEnv(cerrar) {
+  const asunto    = document.getElementById('env-asunto').value.trim();
+  const tipo      = document.getElementById('env-tipo').value;
+  const elaborado = document.getElementById('env-elaborado').value;
+  if (!asunto||!tipo||!elaborado) { toast('Complete los campos obligatorios','error'); return; }
+  const now = new Date();
+  const isEdit = !!editingEnvId;
+  const existing = isEdit ? enviados.find(e=>e.id===editingEnvId) : null;
+
+  const codigo = isEdit ? existing.codigo : genCodigoEnv(tipo);
+
+  const doc = {
+    id: isEdit ? editingEnvId : newId(),
+    codigo, tipo,
+    destInterno:  document.getElementById('env-dest-int').value,
+    destExterno:  document.getElementById('env-dest-ext').value,
+    otrasDep:     document.getElementById('env-otras').value,
+    elaborado, medio: document.getElementById('env-medio').value,
+    fechaDoc:     document.getElementById('env-fdoc').value,
+    fechaRegistro: isEdit ? existing.fechaRegistro : now.toISOString(),
+    asunto, tema: document.getElementById('env-tema').value,
+    observaciones: document.getElementById('env-obs').value,
+    hipervinculo: document.getElementById('env-hiper').value,
+    vinculo:      document.getElementById('env-vinculo').value,
+    jefPrincipal: document.getElementById('env-jef-principal').value,
+    jefAlterna:   document.getElementById('env-jef-alterna').value,
+    estadoRevision: document.getElementById('env-estado-rev').value,
+    año: new Date().getFullYear(),
+    creadoPor: currentUser?.nombre||''
+  };
+
+  if (isEdit) { const i=enviados.findIndex(e=>e.id===editingEnvId); enviados[i]=doc; toast('Documento actualizado','success'); }
+  else { enviados.unshift(doc); toast('Documento creado: '+codigo,'success'); }
+  saveAll(); updateBadges();
+  if (cerrar) { closeModal('modal-enviado'); renderEnviados(); }
+  else { resetEnv(); editingEnvId=null; document.getElementById('env-fdoc').value=today(); updateEnvCodigo(); }
+}
+
+// ======================== RENDER RECIBIDOS ========================
+function diasTranscurridos(fechaRecibido) {
+  if (!fechaRecibido) return null;
+  const d = Math.floor((Date.now() - new Date(fechaRecibido)) / 86400000);
+  return d;
+}
+function diasChip(doc) {
+  if (doc.estado === 'Resuelto') return '<span class="dias-chip normal">Resuelto</span>';
+  const d = diasTranscurridos(doc.fechaRecibido);
+  if (d === null) return '—';
+  if (d > 15) return `<span class="dias-chip high">${d}d</span>`;
+  if (d > 7)  return `<span class="dias-chip medium">${d}d</span>`;
+  return `<span class="dias-chip normal">${d}d</span>`;
+}
+function canalBadge(canal) {
+  if (!canal) return '<span style="color:var(--text3);font-size:10px">—</span>';
+  const map = {
+    'Ventanilla física':   ['canal-ventanilla','🏢'],
+    'Dependencia interna': ['canal-interna','🏛️'],
+    'Externo directo':     ['canal-externo','📬'],
+    'Correo electrónico':  ['canal-correo','📧']
+  };
+  const [cls, icon] = map[canal] || ['canal-externo','📄'];
+  return `<span class="canal-badge ${cls}">${icon} ${canal}</span>`;
+}
+
+function renderRecibidos() {
+  const q     = (document.getElementById('search-rec')?.value||'').toLowerCase();
+  const tipo  = document.getElementById('f-rec-tipo')?.value||'';
+  const estado= document.getElementById('f-rec-estado')?.value||'';
+  const func  = document.getElementById('f-rec-func')?.value||'';
+  const data  = recibidos.filter(r=>
+    (!q || r.asunto.toLowerCase().includes(q)||r.codigo?.toLowerCase().includes(q)||(r.departamento||'').toLowerCase().includes(q)||(r.ndoc||'').toLowerCase().includes(q)) &&
+    (!tipo||r.tipo===tipo) && (!estado||r.estado===estado) &&
+    (!func||(r.funcionariosAsignados||[r.funcionarioAsignado]).includes(func))
+  );
+  const slice = pag(data,recPage);
+  document.getElementById('rec-tbody').innerHTML = slice.length ? slice.map(r=>{
+    const ps = getPlazoStatus(r);
+    const rowClass = ps.status==='vencido' ? 'class="plazo-vencido"' : ps.status==='proximo' ? 'class="plazo-proximo"' : '';
+    const asigDisplay = (r.funcionariosAsignados?.length)
+      ? `<div class="asig-chips">${r.funcionariosAsignados.map(f=>`<span class="asig-chip" title="${funcDepto(f)||''}">${f}</span>`).join('')}</div>`
+      : (r.funcionarioAsignado ? `<span class="asig-chip" title="${funcDepto(r.funcionarioAsignado)||''}">${r.funcionarioAsignado}</span>` : '—');
+    return `
+    <tr ${rowClass}>
+      <td><span class="mono" style="color:var(--primary);font-weight:600">${r.codigo||'—'}</span></td>
+      <td><span class="mono" style="font-size:11px">${r.ndoc||'Sin número'}</span></td>
+      <td><span class="badge b-rec">${r.tipo}</span></td>
+      <td>${canalBadge(r.canal)}</td>
+      <td style="max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.departamento||r.programa||'—'}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.asunto}">${r.asunto}</td>
+      <td class="mono">${fmtDate(r.fechaRecibido)}</td>
+      <td>${diasChip(r)}</td>
+      <td style="text-align:center">${r.plazo||'—'}</td>
+      <td>${plazoBadge(r)}</td>
+      <td>${asigDisplay}</td>
+      <td>${sBadge(r.estado)}</td>
+      <td><div class="td-actions">
+        <button class="btn-icon" title="Ver" onclick="verDoc('rec','${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${canDo('recibir')?`<button class="btn-icon" title="Editar" onclick="editarRec('${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>`:''}
+        ${canDo('asignar')&&r.estado!=='Resuelto'?`<button class="btn-icon" title="Asignar / Resolver" onclick="abrirAsignar('${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>`:''}
+        ${canDo('eliminar')?`<button class="btn-icon danger" title="Eliminar" onclick="eliminar('rec','${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6m4-6v6M9 6V4h6v2"/></svg></button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('') : emptyRow(13);
+  renderPag('rec',data.length,recPage,n=>{recPage=n;renderRecibidos();});
+}
+
+// ======================== RENDER ENVIADOS ========================
+function renderEnviados() {
+  const q    = (document.getElementById('search-env')?.value||'').toLowerCase();
+  const tipo = document.getElementById('f-env-tipo')?.value||'';
+  let data   = enviados.filter(e=>
+    e.año===añoActual &&
+    (!q||e.asunto.toLowerCase().includes(q)||e.codigo?.toLowerCase().includes(q)||(e.destInterno||'').toLowerCase().includes(q)) &&
+    (!tipo||e.tipo===tipo)
+  );
+  // Creador: solo ve los suyos (documentos donde él es elaborador o los creó)
+  if (currentUser?.perfil==='creador') {
+    data = data.filter(e =>
+      e.creadoPor === currentUser.nombre ||
+      e.elaborado === currentUser.nombre ||
+      e.creadoPor === currentUser.login
+    );
+  }
+  const slice = pag(data,envPage);
+  document.getElementById('env-tbody').innerHTML = slice.length ? slice.map(e=>`
+    <tr>
+      <td><span class="mono" style="color:var(--secondary);font-weight:600">${e.codigo||'—'}</span></td>
+      <td><span class="badge b-env">${e.tipo}</span></td>
+      <td>${e.destInterno||e.destExterno||'—'}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${e.asunto}">${e.asunto}</td>
+      <td>${e.tema||'—'}</td>
+      <td>${e.elaborado||'—'}</td>
+      <td>
+        ${e.jefPrincipal?`<span class="jef-badge">${e.jefPrincipal}</span>`:'—'}
+        ${e.jefAlterna?`<span class="jef-badge alt">${e.jefAlterna}</span>`:''}
+        ${e.estadoRevision&&e.estadoRevision!=='Pendiente revisión'?`<div style="margin-top:3px"><span class="badge" style="font-size:9px;background:${e.estadoRevision==='Aprobado'?'var(--success-bg)':e.estadoRevision==='Devuelto'?'var(--danger-bg)':'var(--warning-bg)'};color:${e.estadoRevision==='Aprobado'?'var(--success)':e.estadoRevision==='Devuelto'?'var(--danger)':'var(--warning)'}">${e.estadoRevision}</span></div>`:''}
+      </td>
+      <td class="mono">${fmtDate(e.fechaDoc||e.fechaRegistro)}</td>
+      <td><div class="td-actions">
+        <button class="btn-icon" title="Ver" onclick="verDoc('env','${e.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${canDo('crear')?`<button class="btn-icon" title="Editar" onclick="editarEnv('${e.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>`:''}
+        ${canDo('eliminar')||canDo('crear')?`<button class="btn-icon danger" title="Eliminar" onclick="eliminar('env','${e.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6m4-6v6M9 6V4h6v2"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('') : emptyRow(9);
+  renderPag('env',data.length,envPage,n=>{envPage=n;renderEnviados();});
+}
+
+// ======================== RENDER ASIGNADOS ========================
+function renderAsignados() {
+  populateSels();
+  const q     = (document.getElementById('search-asig')?.value||'').toLowerCase();
+  const func  = document.getElementById('f-asig-func')?.value||'';
+  const estado= document.getElementById('f-asig-estado')?.value||'';
+  const data  = recibidos.filter(r=>
+    r.año===añoActual && (r.estado==='Asignado'||r.estado==='Resuelto') &&
+    (!q||r.asunto.toLowerCase().includes(q)||(r.funcionarioAsignado||'').toLowerCase().includes(q)) &&
+    (!func||r.funcionarioAsignado===func) && (!estado||r.estado===estado)
+  );
+  const slice = pag(data,asigPage);
+  document.getElementById('asig-tbody').innerHTML = slice.length ? slice.map(r=>`
+    <tr>
+      <td><span class="mono" style="color:var(--primary);font-weight:600">${r.codigo||'—'}</span></td>
+      <td><span class="badge b-rec">${r.tipo}</span></td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.asunto}</td>
+      <td><strong>${r.funcionarioAsignado||'—'}</strong></td>
+      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2)">${r.instrucciones||'—'}</td>
+      <td class="mono">${fmtDate(r.fechaRecibido)}</td>
+      <td style="text-align:center">${r.plazo||'—'}</td>
+      <td>${sBadge(r.estado)}</td>
+      <td><div class="td-actions">
+        <button class="btn-icon" title="Ver" onclick="verDoc('rec','${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${canDo('resolver')&&r.estado==='Asignado'?`<button class="btn-icon" title="Marcar Resuelto" onclick="marcarResuelto('${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('') : emptyRow(9);
+  renderPag('asig',data.length,asigPage,n=>{asigPage=n;renderAsignados();});
+}
+
+// ======================== VER / EDITAR ========================
+function verDoc(tipo, id) {
+  const doc = tipo==='rec' ? recibidos.find(r=>r.id===id) : enviados.find(e=>e.id===id);
+  if (!doc) return;
+  const isR = tipo==='rec';
+  document.getElementById('modal-ver-title').textContent = isR ? 'Documento Recibido — '+doc.codigo : 'Documento Creado — '+doc.codigo;
+  document.getElementById('modal-ver-body').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Código del Sistema</div>
+        <div style="font-family:monospace;font-size:16px;font-weight:700;color:${isR?'var(--primary)':'var(--secondary)'}">${doc.codigo||'—'}</div></div>
+      <div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Tipo</div><span class="badge ${isR?'b-rec':'b-env'}">${doc.tipo}</span></div>
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">N.° Documento Original</div><div style="font-family:monospace;font-size:13px;font-weight:600">${doc.ndoc||'Sin número'}</div></div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Estado</div>${sBadge(doc.estado)}</div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Depto/Institución</div><div style="font-size:13px">${doc.departamento||doc.programa||'—'}</div></div>`:''}
+      ${!isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Destinatario</div><div style="font-size:13px">${doc.destInterno||doc.destExterno||'—'}</div></div>`:''}
+      ${!isR&&doc.jefPrincipal?`<div style="grid-column:span 2"><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Jefatura Revisora</div><span class="jef-badge">${doc.jefPrincipal}</span>${doc.jefAlterna?` <span class="jef-badge alt">${doc.jefAlterna}</span>`:''} ${doc.estadoRevision?`<span class="badge" style="margin-left:6px;font-size:10px;background:${doc.estadoRevision==='Aprobado'?'var(--success-bg)':'var(--warning-bg)'};color:${doc.estadoRevision==='Aprobado'?'var(--success)':'var(--warning)'}">${doc.estadoRevision}</span>`:''}</div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Fecha Recibido</div><div class="mono">${fmtDate(doc.fechaRecibido)}</div></div>`:`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Fecha Registro</div><div class="mono">${fmtDate(doc.fechaRegistro)}</div></div>`}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Plazo / Vencimiento</div><div>${doc.plazo||'—'} días ${plazoBadge(doc)}</div></div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Canal de Ingreso</div>${canalBadge(doc.canal)}</div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Días Transcurridos</div>${diasChip(doc)}</div>`:''}
+      ${isR?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Persona Recibe</div><div>${doc.personaRecibe||'—'}</div></div>`:`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Elaborado por</div><div>${doc.elaborado||'—'}</div></div>`}
+      <div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Medio Entrega</div><div>${doc.medio||'—'}</div></div>
+      ${doc.funcionarioAsignado?`<div><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:3px">Asignado a</div><div style="font-weight:600">${(doc.funcionariosAsignados||[doc.funcionarioAsignado]).map(f=>`${f}${funcDepto(f)?' ('+funcDepto(f)+')':''}`).join(', ')}</div></div>`:''}
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:12px;margin-bottom:10px">
+      <div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Asunto</div>
+      <div style="font-size:13px;line-height:1.5">${doc.asunto}</div>
+    </div>
+    ${doc.observaciones?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Observaciones</div><div style="font-size:12px;color:var(--text2)">${doc.observaciones}</div></div>`:''}
+    ${doc.hipervinculo?`<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:4px">Hipervínculo</div><a href="${doc.hipervinculo}" target="_blank" style="font-size:12px;color:var(--accent)">${doc.hipervinculo}</a></div>`:''}
+    ${isR&&doc.estado==='Resuelto'&&doc.resolucionNotas?`
+    <div style="border:1px solid #86d086;border-radius:var(--radius);background:var(--success-bg);padding:12px;margin-bottom:10px">
+      <div style="font-size:10px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">✓ Datos de Resolución</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+        ${doc.resolucionTipo?`<div><div style="font-size:10px;color:var(--success);font-weight:600">Tipo doc. respuesta</div><div>${doc.resolucionTipo}</div></div>`:''}
+        ${doc.resolucionCodigo?`<div><div style="font-size:10px;color:var(--success);font-weight:600">Código respuesta</div><div style="font-family:monospace">${doc.resolucionCodigo}</div></div>`:''}
+        ${doc.resolucionFecha?`<div><div style="font-size:10px;color:var(--success);font-weight:600">Fecha resolución</div><div>${fmtDate(doc.resolucionFecha)}</div></div>`:''}
+      </div>
+      ${doc.resolucionNotas?`<div style="margin-top:8px"><div style="font-size:10px;color:var(--success);font-weight:600;margin-bottom:3px">Anotaciones</div><div style="font-size:12px">${doc.resolucionNotas}</div></div>`:''}
+    </div>`:''}
+    <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid var(--border)">
+      <button class="btn btn-ghost" onclick="closeModal('modal-ver')">Cerrar</button>
+      ${isR&&doc.estado!=='Resuelto'&&canDo('asignar')?`<button class="btn btn-primary" onclick="closeModal('modal-ver');abrirAsignar('${doc.id}')">Asignar / Resolver</button>`:''}
+    </div>`;
+  openModal('modal-ver');
+}
+
+function editarRec(id) {
+  if (!canDo('recibir')) { toast('Sin permisos','error'); return; }
+  const doc=recibidos.find(r=>r.id===id); if(!doc) return;
+  editingRecId=id; populateSels();
+  document.getElementById('rec-edit-id').value=id;
+  document.getElementById('rec-fecha-reg').textContent=fmtDate(doc.fechaRecibido);
+  document.getElementById('rec-codigo-display').textContent=doc.codigo||'—';
+  document.getElementById('rec-depto').value=doc.departamento;
+  document.getElementById('rec-prog').value=doc.programa;
+  document.getElementById('rec-tipo').value=doc.tipo;
+  document.getElementById('rec-forma').value=doc.forma;
+  document.getElementById('rec-ndoc').value=doc.ndoc==='Sin número'?'':doc.ndoc;
+  document.getElementById('rec-plazo').value=doc.plazo;
+  document.getElementById('rec-folios').value=doc.folios;
+  document.getElementById('rec-fdoc').value=doc.fechaDoc;
+  document.getElementById('rec-medio').value=doc.medio;
+  document.getElementById('rec-entrega').value=doc.personaEntrega;
+  document.getElementById('rec-recibe').value=doc.personaRecibe;
+  document.getElementById('rec-asunto').value=doc.asunto;
+  document.getElementById('rec-obs').value=doc.observaciones;
+  document.getElementById('rec-hiper').value=doc.hipervinculo;
+  document.getElementById('rec-vinculo').value=doc.vinculo;
+  if (doc.canal) setCanal(doc.canal);
+  openModal('modal-recibir');
+}
+
+function editarEnv(id) {
+  if (!canDo('crear')) { toast('Sin permisos','error'); return; }
+  const doc=enviados.find(e=>e.id===id); if(!doc) return;
+  editingEnvId=id; populateSels();
+  document.getElementById('env-edit-id').value=id;
+  document.getElementById('env-fecha-reg').textContent=fmtDate(doc.fechaRegistro);
+  document.getElementById('env-codigo-display').textContent=doc.codigo||'—';
+  document.getElementById('env-tipo').value=doc.tipo;
+  document.getElementById('env-dest-int').value=doc.destInterno;
+  document.getElementById('env-dest-ext').value=doc.destExterno;
+  document.getElementById('env-otras').value=doc.otrasDep;
+  document.getElementById('env-elaborado').value=doc.elaborado;
+  document.getElementById('env-medio').value=doc.medio;
+  document.getElementById('env-fdoc').value=doc.fechaDoc;
+  document.getElementById('env-asunto').value=doc.asunto;
+  document.getElementById('env-tema').value=doc.tema;
+  document.getElementById('env-obs').value=doc.observaciones;
+  document.getElementById('env-hiper').value=doc.hipervinculo;
+  document.getElementById('env-vinculo').value=doc.vinculo;
+  document.getElementById('env-jef-principal').value=doc.jefPrincipal||'';
+  document.getElementById('env-jef-alterna').value=doc.jefAlterna||'';
+  document.getElementById('env-estado-rev').value=doc.estadoRevision||'Pendiente revisión';
+  openModal('modal-enviado');
+}
+
+function eliminar(tipo,id) {
+  if (!canDo('eliminar')&&!(tipo==='env'&&canDo('crear'))) { toast('Sin permisos para eliminar','error'); return; }
+  if (!confirm('¿Eliminar este documento?')) return;
+  if (tipo==='rec') recibidos=recibidos.filter(r=>r.id!==id);
+  if (tipo==='env') enviados=enviados.filter(e=>e.id!==id);
+  saveAll(); updateBadges();
+  if (tipo==='rec') renderRecibidos();
+  if (tipo==='env') renderEnviados();
+  toast('Documento eliminado','info');
+}
+
+// ======================== ASIGNAR ========================
+function abrirAsignar(id) {
+  populateSels();
+  const doc=recibidos.find(r=>r.id===id); if(!doc) return;
+  document.getElementById('asig-id').value=id;
+  document.getElementById('asig-doc').value=doc.asunto.substring(0,60);
+  document.getElementById('asig-instr').value=doc.instrucciones||'';
+  document.getElementById('asig-adicionales-wrap').innerHTML='';
+  document.getElementById('asig-email').value='';
+  // Reset resolution section
+  document.getElementById('asig-marcar-resuelto').checked = doc.estado==='Resuelto';
+  document.getElementById('asig-resolucion-section').style.display = doc.estado==='Resuelto' ? 'block' : 'none';
+  document.getElementById('asig-res-codigo').value = doc.resolucionCodigo||'';
+  document.getElementById('asig-res-notas').value = doc.resolucionNotas||'';
+  document.getElementById('asig-res-fecha').value = doc.resolucionFecha||today();
+  if (doc.resolucionTipo) document.getElementById('asig-res-tipo').value = doc.resolucionTipo;
+  // Pre-fill existing assignees
+  if (doc.funcionariosAsignados?.length > 1) {
+    doc.funcionariosAsignados.slice(1).forEach(f => {
+      agregarAsigAdicional(f);
+    });
+  }
+  if (doc.funcionarioAsignado) document.getElementById('asig-func').value = doc.funcionarioAsignado;
+  openModal('modal-asignar');
+}
+
+function toggleResolucion(cb) {
+  document.getElementById('asig-resolucion-section').style.display = cb.checked ? 'block' : 'none';
+  if (cb.checked) document.getElementById('asig-res-fecha').value = today();
+}
+
+function agregarAsigAdicional(preVal) {
+  const wrap=document.getElementById('asig-adicionales-wrap');
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:6px;align-items:center';
+  div.innerHTML=`<select class="form-control" style="flex:1">${funcNombres().map(f=>`<option value="${f}">${f}</option>`).join('')}</select>
+    <button class="btn-icon danger" onclick="this.parentElement.remove()" type="button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`;
+  wrap.appendChild(div);
+  if (preVal) div.querySelector('select').value = preVal;
+}
+
+function confirmarAsignar(soloAsignar) {
+  const id=document.getElementById('asig-id').value;
+  const func=document.getElementById('asig-func').value;
+  if (!func) { toast('Seleccione un funcionario principal','error'); return; }
+  const adicionales=[...document.getElementById('asig-adicionales-wrap').querySelectorAll('select')].map(s=>s.value).filter(Boolean);
+  const todos=[func,...adicionales].filter((v,i,a)=>a.indexOf(v)===i);
+  const idx=recibidos.findIndex(r=>r.id===id); if(idx<0) return;
+  const marcarResuelto = document.getElementById('asig-marcar-resuelto').checked;
+
+  recibidos[idx].funcionarioAsignado=func;
+  recibidos[idx].funcionariosAsignados=todos;
+  recibidos[idx].instrucciones=document.getElementById('asig-instr').value;
+  recibidos[idx].estado = marcarResuelto ? 'Resuelto' : (recibidos[idx].estado==='Pendiente'?'Asignado':recibidos[idx].estado);
+
+  if (marcarResuelto) {
+    recibidos[idx].resolucionTipo  = document.getElementById('asig-res-tipo').value;
+    recibidos[idx].resolucionCodigo= document.getElementById('asig-res-codigo').value;
+    recibidos[idx].resolucionNotas = document.getElementById('asig-res-notas').value;
+    recibidos[idx].resolucionFecha = document.getElementById('asig-res-fecha').value;
+  }
+
+  saveAll(); updateBadges();
+  filterT('rec'); filterT('asig');
+  const emailPara=document.getElementById('asig-email').value;
+  if (!soloAsignar && !marcarResuelto) {
+    closeModal('modal-asignar');
+    mostrarEmailModal(recibidos[idx], todos, emailPara);
+  } else {
+    closeModal('modal-asignar');
+    toast(marcarResuelto ? `Resuelto y guardada la resolución` : `Asignado a: ${todos.join(', ')}`,'success');
+  }
+}
+
+function marcarResuelto(id) {
+  const idx=recibidos.findIndex(r=>r.id===id); if(idx<0) return;
+  recibidos[idx].estado='Resuelto';
+  saveAll(); updateBadges();
+  renderRecibidos(); renderAsignados();
+  toast('Marcado como resuelto','success');
+}
+
+// ======================== EMAIL NOTIFICATION ========================
+function mostrarEmailModal(doc, funcionarios, emailPara) {
+  const instr = doc.instrucciones || 'Sin instrucciones adicionales.';
+  const venc = calcFechaVencimiento(doc.fechaRecibido, doc.plazo);
+  const vencStr = venc ? venc.toLocaleDateString('es-CR') : 'Sin plazo definido';
+  const asunto = `[DGRE] Documento asignado: ${doc.codigo} — ${doc.tipo}`;
+  const cuerpo =
+`Estimado/a ${funcionarios.join(' / ')},
+
+Por medio del presente se le notifica que se le ha asignado el siguiente documento para su atención:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CÓDIGO DEL SISTEMA : ${doc.codigo}
+TIPO DOCUMENTAL    : ${doc.tipo}
+ASUNTO             : ${doc.asunto}
+FECHA DE RECIBIDO  : ${new Date(doc.fechaRecibido).toLocaleDateString('es-CR')}
+PLAZO PARA ATENDER : ${doc.plazo ? doc.plazo + ' días hábiles' : 'No definido'}
+FECHA DE VENCIMIENTO: ${vencStr}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INSTRUCCIONES:
+${instr}
+
+Por favor proceda con la atención de este documento en el plazo indicado y registre su resolución en el sistema.
+
+Atentamente,
+Sistema de Registro Documental
+Dirección General del Registro Electoral
+Tribunal Supremo de Elecciones`;
+
+  document.getElementById('email-para').value = emailPara || funcionarios.map(f=>funcEmail(f)).filter(Boolean).join(', ');
+  document.getElementById('email-asunto-field').value = asunto;
+  document.getElementById('email-cuerpo').textContent = cuerpo;
+  document.getElementById('notif-sent-msg').classList.remove('show');
+  openModal('modal-email');
+}
+
+function copiarEmail() {
+  const texto = `Para: ${document.getElementById('email-para').value}\nAsunto: ${document.getElementById('email-asunto-field').value}\n\n${document.getElementById('email-cuerpo').textContent}`;
+  navigator.clipboard.writeText(texto).then(()=>toast('Contenido copiado al portapapeles','success')).catch(()=>toast('No se pudo copiar automáticamente','error'));
+}
+
+function marcarEmailEnviado() {
+  document.getElementById('notif-sent-msg').classList.add('show');
+  toast('Notificación marcada como enviada','success');
+  setTimeout(()=>closeModal('modal-email'),2000);
+}
+
+// ======================== NOTIFICACION ASIGNACIONES ========================
+function mostrarBannerAsignaciones() {
+  const miNombre = currentUser?.nombre||'';
+  const pendientes = recibidos.filter(r =>
+    (r.funcionariosAsignados||[r.funcionarioAsignado]).includes(miNombre) && r.estado==='Asignado'
+  );
+  if (!pendientes.length) return;
+  const alertsEl = document.getElementById('dash-alerts');
+  if (!alertsEl) return;
+  const banner = document.createElement('div');
+  banner.className = 'asig-notif-banner';
+  banner.innerHTML = `
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+    <div class="asig-notif-count">${pendientes.length}</div>
+    <div class="asig-notif-text">
+      <strong>Tiene ${pendientes.length} documento(s) asignado(s) pendiente(s) de atender</strong>
+      Ingrese a "Mis Asignaciones" para revisarlos y registrar su respuesta.
+    </div>
+    <button class="btn" style="background:rgba(255,255,255,0.2);color:white;border-color:rgba(255,255,255,0.3);flex-shrink:0" onclick="showPage('mis-asignados')">Ver mis asignaciones →</button>
+    <button onclick="this.parentElement.remove()" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:18px;padding:0 4px;flex-shrink:0">×</button>`;
+  alertsEl.prepend(banner);
+}
+
+// ======================== CANAL INGRESO ========================
+function updateCanalStyle() {
+  const radios = document.querySelectorAll('input[name="rec-canal"]');
+  radios.forEach(r => {
+    r.closest('label').classList.toggle('canal-selected', r.checked);
+  });
+}
+
+function setCanal(value) {
+  const radios = document.querySelectorAll('input[name="rec-canal"]');
+  radios.forEach(r => {
+    r.checked = r.value === value;
+    r.closest('label').classList.toggle('canal-selected', r.checked);
+  });
+}
+function buscarVinculo(prefix) {
+  const cod=document.getElementById(prefix+'-vinculo').value.trim();
+  const found=[...recibidos,...enviados].find(d=>d.codigo===cod||d.id===cod);
+  if (found) {
+    toast('Vinculado: '+found.asunto.substring(0,40),'success');
+    if (prefix==='env') { const vi=document.getElementById('env-vinculo-info'); if(vi) vi.textContent='✓ '+found.asunto.substring(0,60); }
+  } else toast('No se encontró documento con ese código','error');
+}
+
+// ======================== JORNADAS ========================
+function resetJor() {
+  ['jor-destino','jor-prop','jor-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['jor-hosp','jor-alim','jor-tc','jor-comb','jor-otros'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=0;});
+  document.getElementById('jor-total').textContent='₡0.00';
+}
+
+function calcJorTotal() {
+  const t=['jor-hosp','jor-alim','jor-tc','jor-comb','jor-otros'].reduce((s,id)=>s+(parseFloat(document.getElementById(id).value)||0),0);
+  document.getElementById('jor-total').textContent='₡'+t.toLocaleString('es-CR',{minimumFractionDigits:2});
+}
+
+function guardarJornada() {
+  const func=document.getElementById('jor-func').value;
+  const dest=document.getElementById('jor-destino').value.trim();
+  const sal=document.getElementById('jor-salida').value;
+  const reg=document.getElementById('jor-regreso').value;
+  if (!func||!dest||!sal||!reg) { toast('Complete los campos obligatorios','error'); return; }
+  const hosp=parseFloat(document.getElementById('jor-hosp').value)||0;
+  const alim=parseFloat(document.getElementById('jor-alim').value)||0;
+  const tc=parseFloat(document.getElementById('jor-tc').value)||0;
+  const comb=parseFloat(document.getElementById('jor-comb').value)||0;
+  const otros=parseFloat(document.getElementById('jor-otros').value)||0;
+  const jorAño = parseInt(document.getElementById('f-pres-año')?.value||añoActual)||añoActual;
+  const jor={
+    id:editingJorId||newId(), funcionario:func, destino:dest, salida:sal, regreso:reg,
+    proposito:document.getElementById('jor-prop').value,
+    transporte:document.getElementById('jor-trans').value,
+    hosp,alim,tc,comb,otros,total:hosp+alim+tc+comb+otros,
+    observaciones:document.getElementById('jor-obs').value, año:jorAño
+  };
+  if (editingJorId) { const i=jornadas.findIndex(j=>j.id===editingJorId); jornadas[i]=jor; }
+  else jornadas.unshift(jor);
+  editingJorId=null; saveAll(); closeModal('modal-jornada');
+  renderJornadas(); renderPresupuestos();
+  toast('Jornada guardada','success');
+}
+
+function renderJornadas() {
+  populateSels();
+  const q=((document.getElementById('search-jor')?.value)||'').toLowerCase();
+  const func=(document.getElementById('f-jor-func')?.value)||'';
+  const data=jornadas.filter(j=>j.año===añoActual&&(!q||j.funcionario.toLowerCase().includes(q)||j.destino.toLowerCase().includes(q))&&(!func||j.funcionario===func));
+  document.getElementById('jor-total-val').textContent='₡'+data.reduce((s,j)=>s+j.total,0).toLocaleString('es-CR',{minimumFractionDigits:2});
+  document.getElementById('jornadas-list').innerHTML=data.length?data.map(j=>`
+    <div style="border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;background:white">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-weight:600;color:var(--primary)">${j.funcionario} — ${j.destino}</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">${j.proposito||'—'} · ${j.transporte}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="text-align:right"><div style="font-size:10px;color:var(--text3)">Total</div><div style="font-family:monospace;font-size:15px;color:var(--success);font-weight:500">₡${j.total.toLocaleString('es-CR',{minimumFractionDigits:2})}</div></div>
+          <button class="btn-icon" onclick="editarJor('${j.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>
+          <button class="btn-icon danger" onclick="elimJor('${j.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px">
+        <div><div style="font-size:10px;color:var(--text3)">Salida</div>${j.salida}</div>
+        <div><div style="font-size:10px;color:var(--text3)">Regreso</div>${j.regreso}</div>
+        <div><div style="font-size:10px;color:var(--text3)">Días</div>${diasEntre(j.salida,j.regreso)}</div>
+        <div><div style="font-size:10px;color:var(--text3)">Hospedaje</div>₡${j.hosp.toLocaleString('es-CR',{minimumFractionDigits:2})}</div>
+        <div><div style="font-size:10px;color:var(--text3)">Alimentación</div>₡${j.alim.toLocaleString('es-CR',{minimumFractionDigits:2})}</div>
+        <div><div style="font-size:10px;color:var(--text3)">Transporte</div>₡${j.tc.toLocaleString('es-CR',{minimumFractionDigits:2})}</div>
+      </div>
+    </div>`).join(''):`<div class="empty-state"><p>No hay jornadas para ${añoActual}.</p></div>`;
+}
+
+function editarJor(id) {
+  const j=jornadas.find(x=>x.id===id); if(!j) return;
+  editingJorId=id; populateSels();
+  document.getElementById('jor-func').value=j.funcionario;
+  document.getElementById('jor-destino').value=j.destino;
+  document.getElementById('jor-salida').value=j.salida;
+  document.getElementById('jor-regreso').value=j.regreso;
+  document.getElementById('jor-prop').value=j.proposito;
+  document.getElementById('jor-trans').value=j.transporte;
+  document.getElementById('jor-hosp').value=j.hosp;
+  document.getElementById('jor-alim').value=j.alim;
+  document.getElementById('jor-tc').value=j.tc;
+  document.getElementById('jor-comb').value=j.comb;
+  document.getElementById('jor-otros').value=j.otros;
+  document.getElementById('jor-obs').value=j.observaciones;
+  calcJorTotal(); openModal('modal-jornada');
+}
+
+function elimJor(id) {
+  if (!confirm('¿Eliminar jornada?')) return;
+  jornadas=jornadas.filter(j=>j.id!==id); saveAll(); renderJornadas(); renderPresupuestos(); toast('Eliminado','info');
+}
+
+// ======================== PRESUPUESTOS ========================
+function renderPresupuestos() {
+  populateSels();
+  const q=((document.getElementById('search-pres')?.value)||'').toLowerCase();
+  const func=(document.getElementById('f-pres-func')?.value)||'';
+  const añoSel=parseInt(document.getElementById('f-pres-año')?.value||new Date().getFullYear());
+  const data=jornadas.filter(j=>
+    j.año===añoSel &&
+    (!q||j.funcionario.toLowerCase().includes(q)||j.destino.toLowerCase().includes(q)) &&
+    (!func||j.funcionario===func)
+  );
+  const totalGastado=data.reduce((s,j)=>s+j.total,0);
+  const el=document.getElementById('pres-total-val');
+  if (el) el.textContent='₡'+totalGastado.toLocaleString('es-CR',{minimumFractionDigits:2});
+
+  // Group by funcionario for summary
+  const byFunc={};
+  data.forEach(j=>{
+    if (!byFunc[j.funcionario]) byFunc[j.funcionario]={nombre:j.funcionario,jornadas:[],total:0};
+    byFunc[j.funcionario].jornadas.push(j);
+    byFunc[j.funcionario].total+=j.total;
+  });
+
+  const container=document.getElementById('presupuestos-list');
+  if (!container) return;
+
+  if (!data.length) {
+    container.innerHTML=`<div class="empty-state"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><p>No hay jornadas registradas para ${añoSel}.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = Object.values(byFunc).map(fg=>`
+    <div style="border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;background:white">
+      <div style="background:var(--primary-bg);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+        <div style="font-weight:600;color:var(--primary);font-size:13px">${fg.nombre}</div>
+        <div style="display:flex;gap:20px;font-size:12px">
+          <span>${fg.jornadas.length} jornada(s)</span>
+          <span style="font-family:monospace;font-size:14px;color:var(--success);font-weight:600">₡${fg.total.toLocaleString('es-CR',{minimumFractionDigits:2})}</span>
+        </div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:left;border-bottom:1px solid var(--border)">Destino</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:left;border-bottom:1px solid var(--border)">Salida</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:left;border-bottom:1px solid var(--border)">Regreso</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:left;border-bottom:1px solid var(--border)">Propósito</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border)">Hospedaje</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border)">Aliment.</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border)">Transp.</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border)">Combustible</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border)">Otros</th>
+          <th style="padding:8px 12px;background:var(--surface2);text-align:right;border-bottom:1px solid var(--border);font-weight:700">Total</th>
+          <th style="padding:8px 12px;background:var(--surface2);border-bottom:1px solid var(--border)"></th>
+        </tr></thead>
+        <tbody>
+          ${fg.jornadas.map(j=>`
+          <tr>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border)">${j.destino}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:monospace;font-size:11px">${j.salida}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:monospace;font-size:11px">${j.regreso}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2)">${j.proposito||'—'}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:11px">₡${j.hosp.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:11px">₡${j.alim.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:11px">₡${j.tc.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:11px">₡${j.comb.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:11px">₡${j.otros.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;font-family:monospace;font-size:12px;font-weight:700;color:var(--success)">₡${j.total.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td style="padding:8px 12px;border-bottom:1px solid var(--border)">
+              <div class="td-actions">
+                <button class="btn-icon" onclick="editarJor('${j.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>
+                <button class="btn-icon danger" onclick="elimJor('${j.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>
+              </div>
+            </td>
+          </tr>`).join('')}
+          <tr style="background:var(--surface2)">
+            <td colspan="9" style="padding:8px 12px;text-align:right;font-weight:600;font-size:12px">SUBTOTAL ${fg.nombre}:</td>
+            <td style="padding:8px 12px;text-align:right;font-family:monospace;font-size:13px;font-weight:700;color:var(--primary)">₡${fg.total.toLocaleString('es-CR',{minimumFractionDigits:2})}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`).join('') +
+    `<div style="display:flex;justify-content:flex-end;padding:12px 0;border-top:2px solid var(--primary)">
+      <div style="font-size:14px;font-weight:700;color:var(--primary)">TOTAL GENERAL ${añoSel}: <span style="font-family:monospace;color:var(--success)">₡${totalGastado.toLocaleString('es-CR',{minimumFractionDigits:2})}</span></div>
+    </div>`;
+}
+
+// ======================== REPORTES ========================
+function renderReportes() {
+  populateSels();
+  genRepAsignaciones();
+}
+
+function genReporte(tipo) {
+  const desde=document.getElementById(`rep-${tipo==='recibidos'?'rec':'env'}-desde`).value;
+  const hasta=document.getElementById(`rep-${tipo==='recibidos'?'rec':'env'}-hasta`).value;
+  const data=(tipo==='recibidos'?recibidos:enviados).filter(d=>{
+    const f=(tipo==='recibidos'?d.fechaRecibido:d.fechaRegistro)?.substring(0,10);
+    return d.año===añoActual&&(!desde||f>=desde)&&(!hasta||f<=hasta);
+  });
+  document.getElementById('rep-result').style.display='block';
+  document.getElementById('rep-title').textContent=`Documentos ${tipo==='recibidos'?'Recibidos':'Creados'} — ${añoActual}`;
+  document.getElementById('rep-count').textContent=`${data.length} documentos`;
+  if (tipo==='recibidos') {
+    document.getElementById('rep-thead').innerHTML='<tr><th>Código</th><th>Tipo</th><th>Depto</th><th>Asunto</th><th>Fecha</th><th>Estado</th></tr>';
+    document.getElementById('rep-tbody').innerHTML=data.map(r=>`<tr><td class="mono">${r.codigo||'—'}</td><td><span class="badge b-rec">${r.tipo}</span></td><td>${r.departamento||r.programa||'—'}</td><td>${r.asunto.substring(0,60)}</td><td class="mono">${fmtDate(r.fechaRecibido)}</td><td>${sBadge(r.estado)}</td></tr>`).join('');
+  } else {
+    document.getElementById('rep-thead').innerHTML='<tr><th>Código</th><th>Tipo</th><th>Destinatario</th><th>Asunto</th><th>Elaborado</th><th>Fecha</th></tr>';
+    document.getElementById('rep-tbody').innerHTML=data.map(e=>`<tr><td class="mono">${e.codigo||'—'}</td><td><span class="badge b-env">${e.tipo}</span></td><td>${e.destInterno||e.destExterno||'—'}</td><td>${e.asunto.substring(0,60)}</td><td>${e.elaborado}</td><td class="mono">${fmtDate(e.fechaDoc||e.fechaRegistro)}</td></tr>`).join('');
+  }
+}
+
+function genRepAsignaciones() {
+  populateSels();
+  const func=(document.getElementById('rep-asig-func')?.value)||'';
+  const funcs=func?[func]:funcNombres();
+  const container=document.getElementById('rep-asig-content');
+  if (!container) return;
+
+  const rows=funcs.map(f=>{
+    const docs=recibidos.filter(r=>r.año===añoActual&&r.funcionarioAsignado===f);
+    const total=docs.length;
+    const resueltos=docs.filter(d=>d.estado==='Resuelto').length;
+    const pendientes=docs.filter(d=>d.estado==='Asignado').length;
+    return { f, total, resueltos, pendientes, docs };
+  }).filter(x=>x.total>0);
+
+  if (!rows.length) { container.innerHTML=`<div class="empty-state"><p>No hay asignaciones registradas para los filtros seleccionados.</p></div>`; return; }
+
+  container.innerHTML=rows.map(({f,total,resueltos,pendientes,docs})=>`
+    <div style="border-bottom:1px solid var(--border);padding:14px 18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-weight:600;font-size:13px;color:var(--primary)">${f}</div>
+        <div style="display:flex;gap:16px;font-size:12px">
+          <span>Total: <strong>${total}</strong></span>
+          <span style="color:var(--success)">Resueltos: <strong>${resueltos}</strong></span>
+          <span style="color:var(--warning)">Pendientes: <strong>${pendientes}</strong></span>
+          <span style="color:var(--text3)">Atención: <strong>${total>0?Math.round(resueltos/total*100):0}%</strong></span>
+        </div>
+      </div>
+      <div style="background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:8px">
+        <div style="height:6px;background:var(--success);width:${total>0?Math.round(resueltos/total*100):0}%;transition:0.3s"></div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead><tr><th style="padding:5px 8px;background:var(--surface2);text-align:left;border:1px solid var(--border)">Código</th><th style="padding:5px 8px;background:var(--surface2);text-align:left;border:1px solid var(--border)">Tipo</th><th style="padding:5px 8px;background:var(--surface2);text-align:left;border:1px solid var(--border)">Asunto</th><th style="padding:5px 8px;background:var(--surface2);text-align:left;border:1px solid var(--border)">Fecha Recibido</th><th style="padding:5px 8px;background:var(--surface2);text-align:left;border:1px solid var(--border)">Estado</th></tr></thead>
+        <tbody>${docs.map(d=>`<tr><td style="padding:5px 8px;border:1px solid var(--border)" class="mono">${d.codigo||'—'}</td><td style="padding:5px 8px;border:1px solid var(--border)">${d.tipo}</td><td style="padding:5px 8px;border:1px solid var(--border);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.asunto}</td><td style="padding:5px 8px;border:1px solid var(--border)" class="mono">${fmtDate(d.fechaRecibido)}</td><td style="padding:5px 8px;border:1px solid var(--border)">${sBadge(d.estado)}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>`).join('');
+}
+
+// ======================== CONFIGURACION ========================
+function renderConfig() {
+  document.getElementById('cfg-dias-alerta').value = config.diasAlerta || 3;
+  document.getElementById('cfg-alertas-dash').value = config.alertasDash ? '1' : '0';
+  document.getElementById('cfg-smtp').value = config.smtp || '';
+  document.getElementById('cfg-smtp-port').value = config.smtpPort || 587;
+  document.getElementById('cfg-remitente').value = config.remitente || '';
+}
+
+function guardarConfig() {
+  config.diasAlerta = parseInt(document.getElementById('cfg-dias-alerta').value) || 3;
+  config.alertasDash = document.getElementById('cfg-alertas-dash').value === '1';
+  config.smtp = document.getElementById('cfg-smtp').value;
+  config.smtpPort = parseInt(document.getElementById('cfg-smtp-port').value) || 587;
+  config.remitente = document.getElementById('cfg-remitente').value;
+  S.s('config', config);
+  toast('Configuración guardada','success');
+}
+function abrirNuevoUsuario() {
+  document.getElementById('modal-user-title').textContent='Nuevo Usuario';
+  document.getElementById('usr-edit-id').value='';
+  ['usr-nombre','usr-login','usr-pass','usr-email','usr-depto'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('usr-perfil').value='recepcion';
+  document.getElementById('usr-estado').value='activo';
+  openModal('modal-usuario');
+}
+
+function guardarUsuario() {
+  const nombre=document.getElementById('usr-nombre').value.trim();
+  const login=document.getElementById('usr-login').value.trim();
+  const pass=document.getElementById('usr-pass').value;
+  const perfil=document.getElementById('usr-perfil').value;
+  const estado=document.getElementById('usr-estado').value;
+  const email=document.getElementById('usr-email').value.trim();
+  const depto=document.getElementById('usr-depto').value.trim();
+  const editId=document.getElementById('usr-edit-id').value;
+  if (!nombre||!login) { toast('Complete nombre y usuario','error'); return; }
+  if (!editId&&!pass) { toast('Ingrese una contraseña','error'); return; }
+  if (pass&&pass.length<4) { toast('La contraseña debe tener al menos 4 caracteres','error'); return; }
+  if (!editId&&usuarios.find(u=>u.login===login)) { toast('Ese usuario ya existe','error'); return; }
+  if (editId) {
+    const i=usuarios.findIndex(u=>u.id===editId);
+    usuarios[i]={...usuarios[i],nombre,login,perfil,estado,email,depto};
+    if (pass) usuarios[i].pass=pass;
+    toast('Usuario actualizado','success');
+  } else {
+    usuarios.push({id:newId(),nombre,login,pass,perfil,estado,email,depto});
+    toast('Usuario creado','success');
+  }
+  saveAll(); closeModal('modal-usuario'); renderUsuarios(); populateSels();
+}
+
+function renderUsuarios() {
+  const tbody=document.getElementById('usuarios-tbody');
+  tbody.innerHTML=usuarios.map(u=>`
+    <tr>
+      <td class="mono">${u.login}</td>
+      <td style="font-weight:500">${u.nombre}</td>
+      <td style="font-size:11px;color:var(--text2)">${u.depto||'—'}</td>
+      <td><span class="badge ${ROLE_BADGES[u.perfil]||'b-rec'}">${ROLE_LABELS[u.perfil]||u.perfil}</span></td>
+      <td style="font-size:11px;color:var(--text2)">${u.email||'—'}</td>
+      <td><span class="badge" style="${u.estado==='activo'?'background:var(--success-bg);color:var(--success)':'background:var(--danger-bg);color:var(--danger)'}">${u.estado}</span></td>
+      <td><div class="td-actions">
+        <button class="btn-icon" onclick="editarUsuario('${u.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>
+        ${u.id!=='u1'?`<button class="btn-icon danger" onclick="elimUsuario('${u.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>`:''}
+      </div></td>
+    </tr>`).join('');
+}
+
+function editarUsuario(id) {
+  const u=usuarios.find(x=>x.id===id); if(!u) return;
+  document.getElementById('modal-user-title').textContent='Editar Usuario';
+  document.getElementById('usr-edit-id').value=id;
+  document.getElementById('usr-nombre').value=u.nombre;
+  document.getElementById('usr-login').value=u.login;
+  document.getElementById('usr-pass').value='';
+  document.getElementById('usr-email').value=u.email||'';
+  document.getElementById('usr-depto').value=u.depto||'';
+  document.getElementById('usr-perfil').value=u.perfil;
+  document.getElementById('usr-estado').value=u.estado;
+  openModal('modal-usuario');
+}
+
+function elimUsuario(id) {
+  if (!confirm('¿Eliminar este usuario?')) return;
+  usuarios=usuarios.filter(u=>u.id!==id); saveAll(); renderUsuarios(); toast('Usuario eliminado','info');
+}
+
+// ======================== CATALOGOS ========================
+function renderCatalogos() {
+  const keys=['tipos','departamentos','medios','formas','programas','jefaturas'];
+  keys.forEach(k=>{
+    const el=document.getElementById('cat-'+k); if(!el) return;
+    el.innerHTML=(catalogos[k]||[]).map((item,i)=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:white">
+        <span style="font-size:13px">${item}</span>
+        <button class="btn-icon danger" onclick="delCat('${k}',${i})"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>`).join('')||`<div style="font-size:12px;color:var(--text3);padding:8px 0">Sin elementos</div>`;
+  });
+  // Remitentes — con institución
+  const catRem = document.getElementById('cat-remitentes');
+  if (catRem) {
+    catRem.innerHTML = (catalogos.remitentes||[]).map((r,i)=>{
+      const nombre = typeof r==='object'?r.nombre:r;
+      const inst   = typeof r==='object'?(r.institucion||''):'';
+      const cont   = typeof r==='object'?(r.contacto||''):'';
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:white">
+        <div>
+          <div style="font-size:13px;font-weight:500">${nombre}</div>
+          ${inst?`<div style="font-size:11px;color:var(--text3)">${inst}${cont?' · '+cont:''}</div>`:'<div style="font-size:11px;color:var(--text3);font-style:italic">Sin institución</div>'}
+        </div>
+        <div style="display:flex;gap:4px">
+          <button class="btn-icon" onclick="abrirModalRemitente(${i})" title="Editar"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4z"/></svg></button>
+          <button class="btn-icon danger" onclick="delRemitente(${i})" title="Eliminar"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+      </div>`;
+    }).join('')||`<div style="font-size:12px;color:var(--text3);padding:8px 0">Sin remitentes</div>`;
+  }
+}
+
+// ======================== REMITENTES CRUD ========================
+function abrirModalRemitente(idx) {
+  document.getElementById('modal-rem-title').textContent = idx!==undefined ? 'Editar Remitente' : 'Nuevo Remitente';
+  document.getElementById('rem-edit-idx').value = idx!==undefined ? idx : '';
+  if (idx!==undefined) {
+    const r = catalogos.remitentes[idx];
+    document.getElementById('rem-nombre').value      = typeof r==='object'?r.nombre:r;
+    document.getElementById('rem-institucion').value = typeof r==='object'?(r.institucion||''):'';
+    document.getElementById('rem-contacto').value    = typeof r==='object'?(r.contacto||''):'';
+  } else {
+    ['rem-nombre','rem-institucion','rem-contacto'].forEach(id=>document.getElementById(id).value='');
+  }
+  openModal('modal-remitente');
+}
+
+function guardarRemitente() {
+  const nombre = document.getElementById('rem-nombre').value.trim();
+  if (!nombre) { toast('Ingrese el nombre del remitente','error'); return; }
+  const obj = {
+    nombre,
+    institucion: document.getElementById('rem-institucion').value.trim(),
+    contacto:    document.getElementById('rem-contacto').value.trim()
+  };
+  const idx = document.getElementById('rem-edit-idx').value;
+  if (!catalogos.remitentes) catalogos.remitentes = [];
+  if (idx !== '') {
+    catalogos.remitentes[parseInt(idx)] = obj;
+    toast('Remitente actualizado','success');
+  } else {
+    catalogos.remitentes.push(obj);
+    toast(`${nombre} agregado a remitentes`,'success');
+  }
+  saveAll(); closeModal('modal-remitente'); renderCatalogos(); populateSels();
+}
+
+function delRemitente(i) {
+  if (!confirm('¿Eliminar este remitente?')) return;
+  catalogos.remitentes.splice(i,1);
+  saveAll(); renderCatalogos(); populateSels(); toast('Remitente eliminado','info');
+}
+
+function addCat(k) {
+  if (!canDo('catalogos')) { toast('Solo el administrador puede modificar catálogos','error'); return; }
+  const v=prompt(`Nuevo elemento en catálogo "${k}":`); if (!v||!v.trim()) return;
+  catalogos[k].push(v.trim()); saveAll(); renderCatalogos(); populateSels(); toast(`"${v.trim()}" agregado`,'success');
+}
+
+function delCat(k,i) {
+  if (!canDo('catalogos')) { toast('Sin permisos','error'); return; }
+  if (!confirm('¿Eliminar este elemento?')) return;
+  catalogos[k].splice(i,1); saveAll(); renderCatalogos(); populateSels(); toast('Eliminado','info');
+}
+
+// ======================== DASHBOARD ========================
+function renderDashboard() {
+  const isCreador = currentUser?.perfil === 'creador';
+  const miNombre = currentUser?.nombre || '';
+
+  const rec = isCreador
+    ? recibidos.filter(r => (r.funcionariosAsignados||[r.funcionarioAsignado]).includes(miNombre))
+    : recibidos;
+  const env = isCreador
+    ? enviados.filter(e => e.creadoPor===miNombre || e.elaborado===miNombre)
+    : enviados;
+
+  document.getElementById('ds-rec').textContent = isCreador ? rec.filter(r=>r.estado==='Asignado'||r.estado==='Resuelto').length : rec.length;
+  document.getElementById('ds-env').textContent = env.length;
+  document.getElementById('ds-pend').textContent = isCreador ? rec.filter(r=>r.estado==='Asignado').length : rec.filter(r=>r.estado==='Pendiente').length;
+  document.getElementById('ds-res').textContent = isCreador ? rec.filter(r=>r.estado==='Resuelto').length : rec.filter(r=>r.estado==='Resuelto').length;
+
+  // Label ajuste para creador
+  if (isCreador) {
+    document.getElementById('ds-rec').closest('.dash-stat').querySelector('.dash-stat-label').textContent = 'Asignados a Mí';
+    document.getElementById('ds-pend').closest('.dash-stat').querySelector('.dash-stat-label').textContent = 'Pendientes Míos';
+  }
+
+  // Alert banners (solo para no-creadores)
+  if (config.alertasDash && !isCreador) {
+    const vencidos=rec.filter(r=>r.estado!=='Resuelto'&&getPlazoStatus(r).status==='vencido');
+    const proximos=rec.filter(r=>r.estado!=='Resuelto'&&getPlazoStatus(r).status==='proximo');
+    let alertsHTML='';
+    if (vencidos.length) alertsHTML+=`<div class="alert-banner danger"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>⚠ Hay <strong class="alert-count">${vencidos.length}</strong> documento(s) con plazo <strong>VENCIDO</strong>.</span><button class="btn btn-danger btn-sm" onclick="showPage('recibidos')">Ver ahora</button></div>`;
+    if (proximos.length) alertsHTML+=`<div class="alert-banner warn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>⏰ <strong class="alert-count">${proximos.length}</strong> documento(s) próximos a vencer.</span><button class="btn btn-ghost btn-sm" onclick="showPage('recibidos')">Revisar</button></div>`;
+    document.getElementById('dash-alerts').innerHTML=alertsHTML;
+  } else {
+    const el=document.getElementById('dash-alerts'); if(el) el.innerHTML='';
+  }
+
+  const tr=document.getElementById('dash-rec-tbody');
+  tr.innerHTML=rec.slice(0,6).map(r=>`<tr><td class="mono" style="color:var(--primary)">${r.codigo||'—'}</td><td><span class="badge b-rec">${r.tipo}</span></td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.asunto}</td><td>${sBadge(r.estado)}</td></tr>`).join('')||emptyRow(4);
+  const te=document.getElementById('dash-env-tbody');
+  te.innerHTML=env.slice(0,6).map(e=>`<tr><td class="mono" style="color:var(--secondary)">${e.codigo||'—'}</td><td><span class="badge b-env">${e.tipo}</span></td><td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.asunto}</td><td>${e.destInterno||e.destExterno||'—'}</td></tr>`).join('')||emptyRow(4);
+
+  updateBadges();
+}
+
+// ======================== MIS ASIGNACIONES ========================
+let misPage = 1;
+function renderMisAsignados() {
+  const miNombre = currentUser?.nombre||'';
+  const q = (document.getElementById('search-mis')?.value||'').toLowerCase();
+  const estado = document.getElementById('f-mis-estado')?.value||'';
+  const data = recibidos.filter(r =>
+    (r.funcionariosAsignados||[r.funcionarioAsignado]).includes(miNombre) &&
+    (!q || r.asunto.toLowerCase().includes(q) || (r.codigo||'').toLowerCase().includes(q) || (r.ndoc||'').toLowerCase().includes(q)) &&
+    (!estado || r.estado===estado)
+  );
+  // Update badge
+  const badge = document.getElementById('badge-mis-asig');
+  if (badge) badge.textContent = data.filter(r=>r.estado==='Asignado').length;
+
+  const slice = pag(data, misPage);
+  document.getElementById('mis-asig-tbody').innerHTML = slice.length ? slice.map(r => {
+    const d = diasTranscurridos(r.fechaRecibido);
+    const sinResolver = r.estado!=='Resuelto' ? (d!==null ? (d>15?`<span class="dias-chip high">${d}d</span>`:d>7?`<span class="dias-chip medium">${d}d</span>`:`<span class="dias-chip normal">${d}d</span>`) : '—') : '<span class="dias-chip normal">—</span>';
+    return `<tr>
+      <td><span class="mono" style="color:var(--primary);font-weight:600">${r.codigo||'—'}</span></td>
+      <td><span class="mono" style="font-size:11px">${r.ndoc||'Sin número'}</span></td>
+      <td><span class="badge b-rec">${r.tipo}</span></td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${r.asunto}">${r.asunto}</td>
+      <td class="mono">${fmtDate(r.fechaRecibido)}</td>
+      <td>${sinResolver}</td>
+      <td style="text-align:center">${r.plazo||'—'}</td>
+      <td>${sBadge(r.estado)}</td>
+      <td><div class="td-actions">
+        <button class="btn-icon" title="Ver detalle" onclick="verDoc('rec','${r.id}')"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        ${r.estado!=='Resuelto'?`<button class="btn-icon" title="Registrar respuesta" onclick="abrirResponder('${r.id}')" style="color:var(--success);border-color:var(--success)"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></button>`:'<span class="plazo-chip ok" style="font-size:10px">✓ Resuelto</span>'}
+      </div></td>
+    </tr>`;
+  }).join('') : emptyRow(9);
+  renderPag('mis', data.length, misPage, n=>{misPage=n; renderMisAsignados();});
+}
+
+function abrirResponder(id) {
+  populateSels();
+  const doc = recibidos.find(r=>r.id===id); if(!doc) return;
+  document.getElementById('resp-doc-id').value = id;
+  document.getElementById('resp-doc-nombre').value = `[${doc.codigo}] ${doc.asunto.substring(0,60)}`;
+  document.getElementById('mis-res-ndoc').value = doc.respuestaNdoc||'';
+  document.getElementById('mis-res-notas').value = doc.respuestaNotas||'';
+  document.getElementById('mis-res-fecha').value = doc.respuestaFecha||today();
+  if (doc.respuestaTipo) document.getElementById('mis-res-tipo').value = doc.respuestaTipo;
+  openModal('modal-responder');
+}
+
+function guardarRespuesta() {
+  const id = document.getElementById('resp-doc-id').value;
+  const ndoc = document.getElementById('mis-res-ndoc').value.trim();
+  const notas = document.getElementById('mis-res-notas').value.trim();
+  if (!ndoc && !notas) { toast('Ingrese al menos el N.° de documento o las observaciones','error'); return; }
+  const idx = recibidos.findIndex(r=>r.id===id); if(idx<0) return;
+  recibidos[idx].estado = 'Resuelto';
+  recibidos[idx].respuestaTipo  = document.getElementById('mis-res-tipo').value;
+  recibidos[idx].respuestaNdoc  = ndoc;
+  recibidos[idx].respuestaNotas = notas;
+  recibidos[idx].respuestaFecha = document.getElementById('mis-res-fecha').value;
+  recibidos[idx].resolucionCodigo = ndoc;
+  recibidos[idx].resolucionNotas  = notas;
+  recibidos[idx].resolucionFecha  = document.getElementById('mis-res-fecha').value;
+  saveAll(); updateBadges();
+  closeModal('modal-responder');
+  renderMisAsignados();
+  toast('Respuesta registrada y documento marcado como resuelto','success');
+}
+
+// ======================== REPORTE VENCIDOS ========================
+function genRepVencidos() {
+  const vencidos = recibidos.filter(r => r.estado!=='Resuelto' && getPlazoStatus(r).status==='vencido');
+  const proximos = recibidos.filter(r => r.estado!=='Resuelto' && getPlazoStatus(r).status==='proximo');
+  const container = document.getElementById('rep-vencidos-content');
+  if (!container) return;
+  if (!vencidos.length && !proximos.length) {
+    container.innerHTML='<div class="empty-state"><p>No hay documentos vencidos ni próximos a vencer. ✓</p></div>';
+    return;
+  }
+  let html = '';
+  if (vencidos.length) {
+    html += `<div style="font-size:12px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">⚠ Vencidos (${vencidos.length})</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px">
+      <thead><tr><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">Código</th><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">N.° Doc</th><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">Tipo</th><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">Asunto</th><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">Asignado a</th><th style="padding:7px 10px;background:var(--danger-bg);text-align:left;border:1px solid var(--border)">Vencimiento</th></tr></thead>
+      <tbody>${vencidos.map(r=>`<tr class="rep-vencidos-row"><td style="padding:7px 10px;border:1px solid var(--border)" class="mono">${r.codigo||'—'}</td><td style="padding:7px 10px;border:1px solid var(--border)" class="mono">${r.ndoc||'—'}</td><td style="padding:7px 10px;border:1px solid var(--border)">${r.tipo}</td><td style="padding:7px 10px;border:1px solid var(--border)">${r.asunto.substring(0,60)}</td><td style="padding:7px 10px;border:1px solid var(--border)">${(r.funcionariosAsignados||[r.funcionarioAsignado]).join(', ')||'Sin asignar'}</td><td style="padding:7px 10px;border:1px solid var(--border)">${plazoBadge(r)}</td></tr>`).join('')}</tbody>
+    </table>`;
+  }
+  if (proximos.length) {
+    html += `<div style="font-size:12px;font-weight:700;color:var(--warning);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">⏰ Próximos a Vencer (${proximos.length})</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">Código</th><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">N.° Doc</th><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">Tipo</th><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">Asunto</th><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">Asignado a</th><th style="padding:7px 10px;background:var(--warning-bg);text-align:left;border:1px solid var(--border)">Vencimiento</th></tr></thead>
+      <tbody>${proximos.map(r=>`<tr><td style="padding:7px 10px;border:1px solid var(--border)" class="mono">${r.codigo||'—'}</td><td style="padding:7px 10px;border:1px solid var(--border)" class="mono">${r.ndoc||'—'}</td><td style="padding:7px 10px;border:1px solid var(--border)">${r.tipo}</td><td style="padding:7px 10px;border:1px solid var(--border)">${r.asunto.substring(0,60)}</td><td style="padding:7px 10px;border:1px solid var(--border)">${(r.funcionariosAsignados||[r.funcionarioAsignado]).join(', ')||'Sin asignar'}</td><td style="padding:7px 10px;border:1px solid var(--border)">${plazoBadge(r)}</td></tr>`).join('')}</tbody>
+    </table>`;
+  }
+  container.innerHTML = html;
+}
+
+// ======================== GLOBAL SEARCH ========================
+function buscarGlobal(q) {
+  const res = document.getElementById('global-search-results');
+  if (!q || q.length < 2) { res.classList.remove('open'); return; }
+  const terms = q.toLowerCase();
+  const found = [
+    ...recibidos.filter(r => r.codigo?.toLowerCase().includes(terms) || r.ndoc?.toLowerCase().includes(terms) || r.asunto?.toLowerCase().includes(terms)).map(r => ({...r, _tipo:'rec'})),
+    ...enviados.filter(e => e.codigo?.toLowerCase().includes(terms) || e.asunto?.toLowerCase().includes(terms)).map(e => ({...e, _tipo:'env'}))
+  ].slice(0, 8);
+  if (!found.length) {
+    res.innerHTML='<div class="gsr-empty">Sin resultados</div>';
+  } else {
+    res.innerHTML = found.map(d=>`
+      <div class="gsr-item" onclick="abrirDesdeGlobal('${d._tipo}','${d.id}')">
+        <span class="gsr-code">${d.codigo||d.ndoc||'—'}</span>
+        <span class="gsr-asunto">${d.asunto||'—'}</span>
+        <span class="gsr-tipo"><span class="badge ${d._tipo==='rec'?'b-rec':'b-env'}">${d.tipo||''}</span></span>
+      </div>`).join('');
+  }
+  res.classList.add('open');
+}
+
+function abrirDesdeGlobal(tipo, id) {
+  cerrarBusquedaGlobal();
+  document.getElementById('global-search').value='';
+  verDoc(tipo, id);
+}
+
+function cerrarBusquedaGlobal() {
+  document.getElementById('global-search-results').classList.remove('open');
+}
+
+// ======================== EXPORT ========================
+function exportCSV(tipo) {
+  let rows,headers,fname;
+  if (tipo==='recibidos'||tipo==='rep-recibidos') {
+    headers=['Codigo','Tipo','NDDocumento','Departamento','Asunto','FechaRecibido','Plazo','Folios','PersonaRecibe','Estado'];
+    rows=recibidos.filter(r=>r.año===añoActual).map(r=>[r.codigo,r.tipo,r.ndoc,r.departamento||r.programa,r.asunto,fmtDate(r.fechaRecibido),r.plazo,r.folios,r.personaRecibe,r.estado]);
+    fname=`recibidos_${añoActual}.csv`;
+  } else if (tipo==='enviados'||tipo==='rep-enviados') {
+    headers=['Codigo','Tipo','Destinatario','Asunto','Tema','ElaboradoPor','MedioEntrega','Fecha'];
+    rows=enviados.filter(e=>e.año===añoActual).map(e=>[e.codigo,e.tipo,e.destInterno||e.destExterno,e.asunto,e.tema,e.elaborado,e.medio,fmtDate(e.fechaDoc||e.fechaRegistro)]);
+    fname=`enviados_${añoActual}.csv`;
+  } else if (tipo==='jornadas'||tipo==='presupuestos') {
+    const añoSel=parseInt(document.getElementById('f-pres-año')?.value||añoActual)||añoActual;
+    headers=['Funcionario','Destino','Salida','Regreso','Proposito','Transporte','Hospedaje','Alimentacion','Transporte_C','Combustible','Otros','Total','Año'];
+    rows=jornadas.filter(j=>j.año===añoSel).map(j=>[j.funcionario,j.destino,j.salida,j.regreso,j.proposito,j.transporte,j.hosp,j.alim,j.tc,j.comb,j.otros,j.total,j.año]);
+    fname=`jornadas_${añoSel}.csv`;
+  } else if (tipo==='rep-asignaciones') {
+    headers=['Funcionario','Departamento','Codigo','NDocumento','Tipo','Asunto','FechaRecibido','Estado','DiasTranscurridos'];
+    rows=recibidos.filter(r=>r.funcionarioAsignado).map(r=>[r.funcionarioAsignado,funcDepto(r.funcionarioAsignado),r.codigo,r.ndoc,r.tipo,r.asunto,fmtDate(r.fechaRecibido),r.estado,diasTranscurridos(r.fechaRecibido)]);
+    fname=`asignaciones_${new Date().getFullYear()}.csv`;
+  } else if (tipo==='rep-vencidos') {
+    const todos=[...recibidos.filter(r=>r.estado!=='Resuelto'&&getPlazoStatus(r).status==='vencido').map(r=>({...r,_cat:'VENCIDO'})),...recibidos.filter(r=>r.estado!=='Resuelto'&&getPlazoStatus(r).status==='proximo').map(r=>({...r,_cat:'PRÓXIMO A VENCER'}))];
+    headers=['Categoria','Codigo','NDocumento','Tipo','Asunto','FechaRecibido','Plazo','AsignadoA','Estado'];
+    rows=todos.map(r=>[r._cat,r.codigo,r.ndoc,r.tipo,r.asunto,fmtDate(r.fechaRecibido),r.plazo,(r.funcionariosAsignados||[r.funcionarioAsignado]).join(';'),r.estado]);
+    fname=`vencidos_${new Date().getFullYear()}.csv`;
+  }
+  const csv=[headers,...rows].map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'})); a.download=fname; a.click();
+  toast('CSV exportado','success');
+}
+
+// ======================== HELPERS ========================
+function filterT(t) {
+  if (t==='rec'){recPage=1;renderRecibidos();}
+  if (t==='env'){envPage=1;renderEnviados();}
+  if (t==='asig'){asigPage=1;renderAsignados();}
+}
+
+function updateBadges() {
+  document.getElementById('badge-rec').textContent=recibidos.length;
+  document.getElementById('badge-env').textContent=enviados.length;
+  const miNombre=currentUser?.nombre||'';
+  const misPend=recibidos.filter(r=>(r.funcionariosAsignados||[r.funcionarioAsignado]).includes(miNombre)&&r.estado==='Asignado').length;
+  const bm=document.getElementById('badge-mis-asig'); if(bm) bm.textContent=misPend;
+}
+
+function sBadge(e) {
+  const m={Pendiente:'b-pend',Asignado:'b-asig',Resuelto:'b-res'};
+  return `<span class="badge ${m[e]||'b-pend'}">${e||'Pendiente'}</span>`;
+}
+
+function pag(data,page) { return data.slice((page-1)*PER,page*PER); }
+
+function renderPag(prefix,total,current,cb) {
+  const pages=Math.ceil(total/PER)||1;
+  document.getElementById(prefix+'-pag-info').textContent=`${Math.min((current-1)*PER+1,total)}–${Math.min(current*PER,total)} de ${total}`;
+  const el=document.getElementById(prefix+'-pag-btns'); el.innerHTML='';
+  for(let i=1;i<=pages;i++){const b=document.createElement('button');b.className='pag-btn'+(i===current?' active':'');b.textContent=i;b.onclick=()=>cb(i);el.appendChild(b);}
+}
+
+function emptyRow(cols) { return `<tr><td colspan="${cols}"><div class="empty-state"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414A1 1 0 0119 8.414V19a2 2 0 01-2 2z"/></svg><p>No hay documentos para mostrar.</p></div></td></tr>`; }
+
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt=new Date(d); if(isNaN(dt)) return d;
+  return dt.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function today() { return new Date().toISOString().split('T')[0]; }
+function newId() { return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
+function diasEntre(a,b) { if(!a||!b)return'—'; return Math.max(0,Math.round((new Date(b)-new Date(a))/(86400000)))+' días'; }
+
+function toast(msg,type='info') {
+  const c=document.getElementById('toast-wrap');
+  const t=document.createElement('div'); t.className=`toast ${type}`;
+  t.innerHTML=`<span>${{success:'✓',error:'✕',info:'ℹ'}[type]||'ℹ'}</span> ${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='0.3s';setTimeout(()=>t.remove(),300);},3200);
+}
+
+// ======================== INIT ========================
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+document.getElementById('login-user').focus();
+</script>
+</body>
+</html>
